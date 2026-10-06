@@ -5,6 +5,7 @@ import { GalleryPage } from './gallery-page/gallery-page';
 import { SpecificationsPage } from './specifications-page/specifications-page';
 import { PricePage } from './price-page/price-page';
 import { FloorPlansPage } from './floor-plans-page/floor-plans-page';
+import { ContactPage } from './contact-page/contact-page';
 
 
 export const routes: Routes = [
@@ -36,6 +37,10 @@ export const routes: Routes = [
 
   { 
     path: 'floor-plans', component: FloorPlansPage, title: 'Floor Plans | Green Woods — Pragathi Developers' 
+  },
+
+  { path: 'contact', component: ContactPage, title: 'Contact Us | Green Woods — Pragathi Developers' 
+
   },
 
   // Any unknown address goes back to the home page
