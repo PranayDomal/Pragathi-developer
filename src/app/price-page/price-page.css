@@ -1,164 +1,164 @@
-:host {
-  --green-dark: #1b4d2e;
-  --cream: #faf5ee;
-  --cream-card: #f5efe6;
-  --terracotta: #c45b30;
-  --text-dark: #202020;
-  --text-muted: #808080;
-  --border-light: #e6dfd5;
-}
-
 /* ---------- 1. Heading band ---------- */
 .band {
-  padding: 80px 24px 60px;
+  padding: 80px 32px;
   background: var(--green-dark);
   text-align: center;
 }
 
 .eyebrow {
   display: inline-block;
-  font-size: 13px;
-  font-weight: 600;
+  font-size: 12px;
+  font-weight: 500;
   letter-spacing: 0.25em;
   text-transform: uppercase;
-  color: #a8c3b0;
+  color: rgba(250, 245, 238, 0.6);
 }
 
 .band h1 {
-  margin-top: 16px;
+  margin-top: 6px;
   font-family: 'Gelasio', Georgia, serif;
   font-weight: 700;
-  font-size: 48px;
+  font-size: 50px;
   line-height: 1.15;
-  color: #ffffff;
+  color: var(--cream);
 }
 
 .band p {
   max-width: 660px;
-  margin: 16px auto 0;
-  font-size: 17px;
-  line-height: 1.5;
-  color: #d2e0d6;
+  margin: 8px auto 0;
+  font-size: 18px;
+  line-height: 1.55;
+  color: rgba(250, 245, 238, 0.88);
 }
 
 .band p strong {
-  color: #ffffff;
+  color: #fff;
   font-weight: 700;
 }
 
 /* ---------- 2. Price cards ---------- */
 .plans {
-  padding: 80px 24px;
+  padding: 80px 32px;
   background: var(--cream);
 }
 
 .plan-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 32px;
-  max-width: 1140px;
+  gap: 24px;
+  max-width: 1088px;
   margin: 0 auto;
 }
 
 .plan {
   display: flex;
   flex-direction: column;
-  padding: 40px 32px;
-  border: 1px solid var(--border-light);
-  border-radius: 16px;
-  background: #ffffff;
-}
-
-.plan-header {
+  padding: 32px;
+  border: 1px solid #eadfca;
+  border-radius: 14px;
+  background: #fbf7ef;
   text-align: center;
 }
 
-.plan h2 {
+.plan:hover {
+  border-color: #5aa377;
+  box-shadow: 0 10px 28px rgba(31, 77, 46, 0.12);
+}
+
+/* Title box with the blocks line under it */
+.plan-head {
+  padding: 14px 16px 12px;
+  border: 1px solid #eadfca;
+  border-radius: 8px;
+}
+
+.plan-head h2 {
   font-family: 'Gelasio', Georgia, serif;
   font-weight: 700;
-  font-size: 28px;
+  font-size: 26px;
   line-height: 1.2;
-  color: var(--text-dark);
+  color: #141414;
 }
 
 .plan-sub {
-  margin-top: 6px;
-  font-size: 12px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--text-muted);
-}
-
-.price-box {
-  margin: 28px 0;
-  padding: 24px 16px;
-  background: var(--cream-card);
-  border-radius: 12px;
-  text-align: center;
-}
-
-.price-lbl {
   display: block;
-  font-size: 14px;
-  color: var(--text-muted);
+  margin-top: 3px;
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #7a7a7a;
 }
 
-.price-val {
-  margin-top: 6px;
+.from {
+  margin-top: 24px;
+  font-size: 15px;
+  line-height: 1.4;
+  color: #6b6b6b;
+}
+
+.amount {
+  display: block;
+  margin-top: 4px;
   font-family: 'Gelasio', Georgia, serif;
   font-weight: 700;
-  font-size: 34px;
+  font-size: 38px;
+  line-height: 1.2;
   color: var(--green-dark);
 }
 
 .plan-rows {
-  margin: 0 0 32px 0;
+  margin: 20px 0 0;
+  padding-top: 18px;
+  border-top: 1px solid #eadfca;
 }
 
 .plan-row {
   display: flex;
-  align-items: center;
+  align-items: baseline;
   justify-content: space-between;
-  padding: 12px 0;
+  gap: 16px;
+  padding: 5px 0;
 }
 
 dt {
   margin: 0;
   font-size: 15px;
-  color: var(--text-muted);
+  line-height: 1.45;
+  color: #7a7a7a;
 }
 
 dd {
   margin: 0;
   font-size: 15px;
-  font-weight: 600;
-  color: var(--text-dark);
+  font-weight: 500;
+  line-height: 1.45;
+  text-align: right;
+  color: #1c1c1c;
 }
 
 .enq {
-  width: 100%;
-  height: 48px;
-  margin-top: auto;
+  height: 44px;
+  margin-top: 26px;
   border: none;
-  border-radius: 6px;
+  border-radius: 4px;
   background: var(--terracotta);
-  color: #ffffff;
+  color: #fff;
   font-family: inherit;
   font-size: 14px;
   font-weight: 700;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
   cursor: pointer;
   transition: background-color 0.2s ease;
 }
 
 .enq:hover {
-  background: #a84c26;
+  background: #a9532d;
 }
 
 /* ---------- 3. Taxes and fees ---------- */
 .costs {
-  padding: 80px 24px;
+  padding: 80px 32px;
   background: var(--cream);
   text-align: center;
 }
@@ -167,189 +167,225 @@ dd {
 .emi h2 {
   font-family: 'Gelasio', Georgia, serif;
   font-weight: 700;
-  font-size: 38px;
+  font-size: 32px;
   line-height: 1.2;
-  color: var(--text-dark);
+  color: #141414;
 }
 
 .sub {
   max-width: 640px;
-  margin: 12px auto 0;
+  margin: 10px auto 0;
   font-size: 16px;
-  color: var(--text-muted);
+  line-height: 1.5;
+  color: #6b6b6b;
 }
 
 .taxes {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 20px;
-  max-width: 1140px;
-  margin: 48px auto 0;
+  gap: 16px;
+  max-width: 832px;
+  margin: 32px auto 0;
 }
 
 .tax {
-  padding: 32px 16px;
-  border: 1px solid var(--border-light);
-  border-radius: 12px;
-  background: #ffffff;
+  padding: 20px 16px;
+  border: 1px solid #eadfca;
+  border-radius: 8px;
+  background: #fbf7ef;
 }
 
 .pct {
   display: block;
   font-family: 'Gelasio', Georgia, serif;
   font-weight: 700;
-  font-size: 42px;
-  line-height: 1;
+  font-size: 32px;
+  line-height: 1.2;
   color: var(--green-dark);
 }
 
 .name {
   display: block;
-  margin-top: 12px;
+  margin-top: 2px;
   font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.05em;
   text-transform: uppercase;
-  color: var(--text-muted);
+  color: #6b6b6b;
 }
 
+/* Total: a light mint box, text centred, number underneath */
 .total {
-  max-width: 1140px;
+  max-width: 832px;
   margin: 24px auto 0;
-  padding: 32px;
-  border: 1px solid var(--border-light);
-  border-radius: 12px;
-  background: #fdfbf7;
+  padding: 20px;
+  border: 1px solid #c9e0cd;
+  border-radius: 8px;
+  background: #eef6ef;
   text-align: center;
 }
 
-.total-lbl {
+.total span {
   display: block;
   font-size: 15px;
-  color: var(--text-muted);
+  line-height: 1.5;
+  color: #444;
 }
 
-.total-pct {
+.total strong {
   display: block;
-  margin-top: 8px;
+  margin-top: 2px;
   font-family: 'Gelasio', Georgia, serif;
   font-weight: 700;
-  font-size: 40px;
-  line-height: 1;
+  font-size: 32px;
+  line-height: 1.2;
   color: var(--green-dark);
 }
 
 /* ---------- 4. EMI calculator ---------- */
 .emi {
-  padding: 80px 24px 120px;
+  padding: 80px 32px 112px;
   background: var(--cream);
   text-align: center;
 }
 
 .calc {
-  max-width: 860px;
-  margin: 48px auto 0;
-  padding: 48px;
-  border: 1px solid var(--border-light);
-  border-radius: 16px;
-  background: #ffffff;
+  max-width: 704px;
+  margin: 32px auto 0;
+  padding: 32px;
+  border: 1px solid #eadfca;
+  border-radius: 14px;
+  background: #fbf7ef;
+  box-shadow: 0 6px 20px rgba(70, 50, 20, 0.05);
   text-align: left;
 }
 
-.sliders {
-  display: flex;
-  flex-direction: column;
-  gap: 32px;
+.slider + .slider {
+  margin-top: 28px;
 }
 
-.field-head {
+/* Label on the left, current value on the right */
+.top {
   display: flex;
+  align-items: baseline;
   justify-content: space-between;
-  align-items: center;
+  gap: 16px;
   margin-bottom: 12px;
 }
 
-label {
+.top label {
   font-size: 15px;
-  font-weight: 600;
-  color: var(--text-dark);
+  font-weight: 500;
+  color: #1c1c1c;
 }
 
-.val-display {
+.val {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
   font-size: 16px;
   font-weight: 700;
   color: var(--green-dark);
 }
 
-/* Custom Range Slider */
-input[type="range"] {
-  -webkit-appearance: none;
-  appearance: none;
+/* Sliders: green filled part up to the round handle, light grey after it */
+input[type='range'] {
+  --thumb: 16px;
+  --track: linear-gradient(
+    to right,
+    var(--green-dark) calc(var(--pos, 0) * (100% - var(--thumb)) + var(--thumb) / 2),
+    #e4e0d6 0
+  );
+
+  display: block;
   width: 100%;
-  height: 8px;
-  border-radius: 4px;
-  background: #e0e7e1;
-  outline: none;
-}
-
-input[type="range"]::-webkit-slider-thumb {
+  height: var(--thumb);
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  cursor: pointer;
   -webkit-appearance: none;
   appearance: none;
-  width: 20px;
-  height: 20px;
+}
+
+input[type='range']:focus-visible {
+  outline: 2px solid #1f7a3a;
+  outline-offset: 4px;
+  border-radius: 999px;
+}
+
+input[type='range']::-webkit-slider-runnable-track {
+  height: 5px;
+  border-radius: 999px;
+  background: var(--track);
+}
+
+input[type='range']::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: var(--thumb);
+  height: var(--thumb);
+  margin-top: -5.5px;
+  border: 0;
   border-radius: 50%;
   background: var(--green-dark);
-  cursor: pointer;
-  transition: transform 0.1s ease;
 }
 
-input[type="range"]::-webkit-slider-thumb:hover {
-  transform: scale(1.15);
+input[type='range']::-moz-range-track {
+  height: 5px;
+  border-radius: 999px;
+  background: var(--track);
 }
 
-input[type="range"]::-moz-range-thumb {
-  width: 20px;
-  height: 20px;
-  border: none;
+input[type='range']::-moz-range-thumb {
+  width: var(--thumb);
+  height: var(--thumb);
+  border: 0;
   border-radius: 50%;
   background: var(--green-dark);
-  cursor: pointer;
 }
 
-/* Results Section */
+/* Results: one mint box, three centred columns */
 .results {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
-  margin-top: 48px;
-  padding: 28px;
-  border-radius: 12px;
-  background: #f4f8f5;
-}
-
-.res {
+  gap: 16px;
+  margin-top: 30px;
+  padding: 20px 16px;
+  border: 1px solid #c9e0cd;
+  border-radius: 8px;
+  background: #f0f7f1;
   text-align: center;
 }
 
-.res .lbl {
+.lbl {
   display: block;
   font-size: 12px;
-  font-weight: 600;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--text-muted);
+  color: #6b6b6b;
 }
 
 .res strong {
   display: block;
-  margin-top: 8px;
+  margin-top: 3px;
   font-family: 'Gelasio', Georgia, serif;
   font-weight: 700;
-  font-size: 26px;
+  font-size: 21px;
+  line-height: 1.2;
   color: var(--green-dark);
 }
 
-/* ---------- Reveal Animation ---------- */
+/* The monthly EMI is the biggest number */
+.res.main strong {
+  font-size: 27px;
+}
+
+.note {
+  margin-top: 16px;
+  text-align: center;
+  font-size: 13px;
+  color: #7a7a7a;
+}
+
+/* ---------- Fade up from below ---------- */
 .reveal {
   opacity: 0;
   transform: translateY(22px);
@@ -363,6 +399,16 @@ input[type="range"]::-moz-range-thumb {
   transform: translateY(0);
 }
 
+/* Cards also change border and shadow on hover (no delay on those) */
+.plan.reveal {
+  transition:
+    opacity 0.8s ease var(--delay, 0s),
+    transform 0.8s ease var(--delay, 0s),
+    border-color 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+/* One after another; --delay only applies while appearing */
 .eyebrow.visible { --delay: 0.1s; }
 .band h1.visible { --delay: 0.25s; }
 .band p.visible { --delay: 0.4s; }
@@ -381,10 +427,11 @@ input[type="range"]::-moz-range-thumb {
 .emi h2.visible { --delay: 0.1s; }
 .emi .sub.visible { --delay: 0.25s; }
 
-/* ---------- Responsive Styles ---------- */
-@media (max-width: 992px) {
+/* ---------- Smaller screens ---------- */
+@media (max-width: 900px) {
   .plan-grid {
     grid-template-columns: 1fr;
+    max-width: 440px;
   }
 
   .taxes {
@@ -393,21 +440,30 @@ input[type="range"]::-moz-range-thumb {
 
   .results {
     grid-template-columns: 1fr;
-    gap: 24px;
   }
 }
 
 @media (max-width: 600px) {
-  .band h1 {
-    font-size: 34px;
+  .band {
+    padding: 56px 20px;
   }
 
-  .calc {
-    padding: 28px 20px;
+  .band h1 {
+    font-size: 32px;
+  }
+
+  .plans,
+  .costs,
+  .emi {
+    padding: 56px 20px;
   }
 
   .costs h2,
   .emi h2 {
-    font-size: 30px;
+    font-size: 26px;
+  }
+
+  .calc {
+    padding: 24px 20px;
   }
 }

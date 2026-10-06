@@ -1,6 +1,6 @@
 <!-- 1. Green heading band -->
 <section class="band">
-  <span class="eyebrow reveal">PRICING</span>
+  <span class="eyebrow reveal">Pricing</span>
   <h1 class="reveal">Embark on New Life Experiences</h1>
   <p class="reveal">
     Starting <strong>₹ 90 Lakhs*</strong> onwards. Transparent breakdown of taxes and fees below.
@@ -12,15 +12,13 @@
   <div class="plan-grid">
     @for (p of plans; track p.title) {
       <article class="plan reveal">
-        <div class="plan-header">
+        <div class="plan-head">
           <h2>{{ p.title }}</h2>
-          <p class="plan-sub">{{ p.sub }}</p>
+          <span class="plan-sub">{{ p.sub }}</span>
         </div>
 
-        <div class="price-box">
-          <span class="price-lbl">Starting Price</span>
-          <div class="price-val">{{ p.price }}</div>
-        </div>
+        <span class="from">Starting Price</span>
+        <strong class="amount">{{ p.price }}</strong>
 
         <dl class="plan-rows">
           <div class="plan-row">
@@ -33,7 +31,7 @@
           </div>
         </dl>
 
-        <button type="button" class="enq" (click)="openEnquiry()">ENQUIRE NOW</button>
+        <button type="button" class="enq" (click)="openEnquiry()">Enquire Now</button>
       </article>
     }
   </div>
@@ -54,10 +52,8 @@
   </div>
 
   <div class="total reveal">
-    <div class="total-content">
-      <span class="total-lbl">Total add-on charges on top of base price</span>
-      <strong class="total-pct">{{ totalTax }}%</strong>
-    </div>
+    <span>Total add-on charges on top of base price</span>
+    <strong>{{ totalTax }}%</strong>
   </div>
 </section>
 
@@ -69,73 +65,74 @@
   </p>
 
   <div class="calc reveal">
-    <div class="sliders">
-      <!-- Loan Amount Slider -->
-      <div class="field">
-        <div class="field-head">
-          <label for="loan">Loan Amount</label>
-          <span class="val-display">₹ {{ formatLoanDisplay(loan()) }}</span>
-        </div>
-        <input 
-          id="loan" 
-          type="range" 
-          min="500000" 
-          max="50000000" 
-          step="100000" 
-          [value]="loan()" 
-          (input)="onLoan($event)" 
-        />
+    <div class="slider">
+      <div class="top">
+        <label for="loan">Loan Amount</label>
+        <span class="val">{{ money(loan()) }}</span>
       </div>
-
-      <!-- Tenure Slider -->
-      <div class="field">
-        <div class="field-head">
-          <label for="years">Tenure (years)</label>
-          <span class="val-display">{{ years() }}</span>
-        </div>
-        <input 
-          id="years" 
-          type="range" 
-          min="5" 
-          max="30" 
-          step="1" 
-          [value]="years()" 
-          (input)="onYears($event)" 
-        />
-      </div>
-
-      <!-- Interest Rate Slider -->
-      <div class="field">
-        <div class="field-head">
-          <label for="rate">Interest Rate (% p.a.)</label>
-          <span class="val-display">{{ rate().toFixed(2) }}</span>
-        </div>
-        <input 
-          id="rate" 
-          type="range" 
-          min="6" 
-          max="14" 
-          step="0.05" 
-          [value]="rate()" 
-          (input)="onRate($event)" 
-        />
-      </div>
+      <input
+        id="loan"
+        type="range"
+        min="500000"
+        max="50000000"
+        step="100000"
+        [value]="loan()"
+        [style.--pos]="loanPos()"
+        (input)="onLoan($event)"
+      />
     </div>
 
-    <!-- Results Box -->
+    <div class="slider">
+      <div class="top">
+        <label for="years">Tenure (years)</label>
+        <span class="val">{{ years() }}</span>
+      </div>
+      <input
+        id="years"
+        type="range"
+        min="5"
+        max="30"
+        step="1"
+        [value]="years()"
+        [style.--pos]="yearsPos()"
+        (input)="onYears($event)"
+      />
+    </div>
+
+    <div class="slider">
+      <div class="top">
+        <label for="rate">Interest Rate (% p.a.)</label>
+        <span class="val">{{ rate().toFixed(2) }}</span>
+      </div>
+      <input
+        id="rate"
+        type="range"
+        min="6"
+        max="14"
+        step="0.1"
+        [value]="rate()"
+        [style.--pos]="ratePos()"
+        (input)="onRate($event)"
+      />
+    </div>
+
     <div class="results">
-      <div class="res">
-        <span class="lbl">MONTHLY EMI</span>
-        <strong>{{ show(emi()) }}</strong>
+      <div class="res main">
+        <span class="lbl">Monthly EMI</span>
+        <strong>{{ money(emi()) }}</strong>
       </div>
       <div class="res">
-        <span class="lbl">TOTAL INTEREST</span>
-        <strong>{{ show(totalInterest()) }}</strong>
+        <span class="lbl">Total Interest</span>
+        <strong>{{ money(totalInterest()) }}</strong>
       </div>
       <div class="res">
-        <span class="lbl">TOTAL PAYABLE</span>
-        <strong>{{ show(totalPayable()) }}</strong>
+        <span class="lbl">Total Payable</span>
+        <strong>{{ money(totalPayable()) }}</strong>
       </div>
     </div>
+
+    <p class="note">
+      Indicative only. Actual EMI depends on lender, credit score, and tenure.
+    </p>
   </div>
 </section>

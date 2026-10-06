@@ -11,32 +11,44 @@ import { ModalState } from '../enquiry-modal/modal-state';
 
 @Component({
   selector: 'app-price-page',
-  standalone: true,
   imports: [],
   templateUrl: './price-page.html',
   styleUrl: './price-page.css',
 })
 export class PricePage implements AfterViewInit, OnDestroy {
   plans = [
-    { title: '2 BHK Apartments', sub: 'BLOCKS A, B & C', price: 'On Request', size: 'TBA', variants: '3 variants' },
-    { title: '3 BHK Apartments', sub: 'BLOCKS A, B & C', price: 'On Request', size: 'TBA', variants: '3 variants' },
-    { title: 'Sky & Garden Villas', sub: 'TRIPLEX · DUPLEX · CORNER', price: 'On Request', size: 'TBA', variants: '8 variants' },
+    { title: '2 BHK Apartments', sub: 'Blocks A, B & C', price: 'On Request', size: 'TBA', variants: '3 variants' },
+    { title: '3 BHK Apartments', sub: 'Blocks A, B & C', price: 'On Request', size: 'TBA', variants: '3 variants' },
+    { title: 'Sky & Garden Villas', sub: 'Triplex · Duplex · Corner', price: 'On Request', size: 'TBA', variants: '8 variants' },
   ];
 
   taxes = [
     { value: 5, name: 'GST' },
-    { value: 5.5, name: 'STAMP DUTY' },
-    { value: 0.5, name: 'REGISTRATION' },
-    { value: 1.5, name: 'TRANSFER DUTY' },
+    { value: 5.5, name: 'Stamp Duty' },
+    { value: 0.5, name: 'Registration' },
+    { value: 1.5, name: 'Transfer Duty' },
   ];
 
+  // 5 + 5.5 + 0.5 + 1.5 = 12.50
   totalTax = this.taxes.reduce((sum, t) => sum + t.value, 0).toFixed(2);
 
-  // ---------- EMI calculator ----------
-  // Initial default values matching the original screenshot
-  loan = signal(7500000); // Default ₹ 75,00,000
-  years = signal(20);      // Default 20 years
-  rate = signal(8.5);      // Default 8.5%
+  // ---------- EMI calculator (sliders) ----------
+  // These ends must match the min / max written on the sliders in price-page.html
+  private readonly loanMin = 500000; // ₹ 5,00,000
+  private readonly loanMax = 50000000; // ₹ 5,00,00,000
+  private readonly yearsMin = 5;
+  private readonly yearsMax = 30;
+  private readonly rateMin = 6;
+  private readonly rateMax = 14;
+
+  loan = signal(7500000); // ₹ 75,00,000
+  years = signal(20);
+  rate = signal(8.5);
+
+  // How far along each slider is (0 to 1); the CSS uses it to colour the filled part
+  loanPos = computed(() => (this.loan() - this.loanMin) / (this.loanMax - this.loanMin));
+  yearsPos = computed(() => (this.years() - this.yearsMin) / (this.yearsMax - this.yearsMin));
+  ratePos = computed(() => (this.rate() - this.rateMin) / (this.rateMax - this.rateMin));
 
   private inr = new Intl.NumberFormat('en-IN', { maximumFractionDigits: 0 });
 
@@ -45,43 +57,28 @@ export class PricePage implements AfterViewInit, OnDestroy {
     const p = this.loan();
     const n = this.years() * 12;
     const r = this.rate() / 1200;
-    if (!(p > 0) || !(n > 0) || !(r >= 0)) return null;
-    if (r === 0) return p / n;
     const f = Math.pow(1 + r, n);
     return (p * r * f) / (f - 1);
   });
 
-  totalPayable = computed(() => {
-    const e = this.emi();
-    return e === null ? null : e * this.years() * 12;
-  });
+  totalPayable = computed(() => this.emi() * this.years() * 12);
+  totalInterest = computed(() => this.totalPayable() - this.loan());
 
-  totalInterest = computed(() => {
-    const t = this.totalPayable();
-    return t === null ? null : t - this.loan();
-  });
-
-  show(value: number | null) {
-    return value === null ? '₹ —' : '₹ ' + this.inr.format(Math.round(value));
-  }
-
-  formatLoanDisplay(val: number): string {
-    return this.inr.format(val);
+  // 7500000 -> "₹ 75,00,000"
+  money(value: number) {
+    return '₹ ' + this.inr.format(Math.round(value));
   }
 
   onLoan(event: Event) {
-    const input = event.target as HTMLInputElement;
-    this.loan.set(Number(input.value));
+    this.loan.set(Number((event.target as HTMLInputElement).value));
   }
 
   onYears(event: Event) {
-    const input = event.target as HTMLInputElement;
-    this.years.set(Number(input.value));
+    this.years.set(Number((event.target as HTMLInputElement).value));
   }
 
   onRate(event: Event) {
-    const input = event.target as HTMLInputElement;
-    this.rate.set(Number(input.value));
+    this.rate.set(Number((event.target as HTMLInputElement).value));
   }
 
   // ---------- Enquire Now pop-up ----------
@@ -95,6 +92,8 @@ export class PricePage implements AfterViewInit, OnDestroy {
   // ---------- Fade up from below ----------
   private host: ElementRef<HTMLElement> = inject(ElementRef);
   private items: HTMLElement[] = [];
+
+  // Height of the sticky header; content under it counts as hidden
   private readonly headerHeight = 110;
 
   ngAfterViewInit() {
@@ -109,6 +108,7 @@ export class PricePage implements AfterViewInit, OnDestroy {
     window.removeEventListener('resize', this.updateReveal);
   }
 
+  // Shows a block when at least 25% of it is visible below the header
   private updateReveal = () => {
     const viewportHeight = window.innerHeight;
     this.items.forEach((el) => {
