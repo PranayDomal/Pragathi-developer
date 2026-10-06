@@ -1,0 +1,166 @@
+/* Lets the sticky category bar stay pinned across the whole page */
+:host {
+  display: contents;
+}
+
+/* ---------- Heading band ---------- */
+.band {
+  padding: 75px 32px;
+  background: var(--green-dark);
+  text-align: center;
+}
+
+.band h1 {
+  font-family: 'Gelasio', Georgia, serif;
+  font-weight: 700;
+  font-size: 46px;
+  line-height: 1.15;
+  color: var(--cream);
+}
+
+.band p {
+  max-width: 700px;
+  margin: 16px auto 0;
+  font-size: 18px;
+  line-height: 1.55;
+  color: rgba(250, 245, 238, 0.88);
+}
+
+/* ---------- Category buttons (sticky) ---------- */
+.filters {
+  position: sticky;
+  top: 109px; /* just under the header */
+  z-index: 50;
+  padding: 16px 32px;
+  background: #fbf7ef;
+  border-bottom: 1px solid #ebe2d0;
+  box-shadow: 0 8px 18px rgba(70, 50, 20, 0.05);
+}
+
+.pills {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+}
+
+.pill {
+  height: 36px;
+  padding: 0 20px;
+  border: none;
+  border-radius: 999px;
+  background: #f0e8d6;
+  color: #2b2b2b;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+/* Hover (only when not selected): slightly darker beige */
+.pill:hover:not(.active) {
+  background: #e6dbc2;
+}
+
+.pill.active {
+  background: var(--green-dark);
+  color: #fff;
+}
+
+.count {
+  font-weight: 600;
+  opacity: 0.55;
+}
+
+/* ---------- Photos ---------- */
+.gallery {
+  padding: 64px 32px 120px;
+  background: var(--cream);
+  border-bottom: 1px solid #efe3cf;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px 12px;
+}
+
+.photo {
+  margin: 0;
+}
+
+.photo img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.photo figcaption {
+  margin-top: 8px;
+  font-size: 13px;
+  line-height: 1.4;
+  color: #8a8576;
+}
+
+/* Light fade-and-pop, only on the first load (the same feel as the map) */
+.photo.pop {
+  animation: pop 0.9s ease 0.1s both;
+}
+
+@keyframes pop {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.97);
+  }
+}
+
+/* ---------- Heading: fade up from below ---------- */
+.reveal {
+  opacity: 0;
+  transform: translateY(22px);
+  transition:
+    opacity 0.8s ease var(--delay, 0s),
+    transform 0.8s ease var(--delay, 0s);
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.band h1.visible { --delay: 0.1s; }
+.band p.visible { --delay: 0.3s; }
+
+/* ---------- Smaller screens ---------- */
+@media (max-width: 1000px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .band {
+    padding: 56px 20px;
+  }
+
+  .band h1 {
+    font-size: 34px;
+  }
+
+  .filters {
+    padding: 12px 16px;
+  }
+
+  .gallery {
+    padding: 40px 16px 80px;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,0 +1,39 @@
+<header class="header">
+  <a routerLink="/" class="brand">
+    <img src="assets/img/logo.png" alt="Green Woods" class="logo" />
+    <span class="by">By Pragathi<br />Developers</span>
+  </a>
+
+  <nav class="nav">
+    <div class="dropdown">
+      <a routerLink="/" class="dropdown-toggle">
+        Green Woods
+        <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M6 9l6 6 6-6" />
+        </svg>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a routerLink="/location" routerLinkActive="active">Location</a></li>
+                <li><a routerLink="/gallery" routerLinkActive="active">Gallery</a></li>
+      </ul>
+    </div>
+
+    <!-- These slide to a section of the home page -->
+    <a routerLink="/" fragment="master-plan">Floor Plans</a>
+    <a routerLink="/specifications">Specifications</a>
+    <a routerLink="/" fragment="amenities">Amenities</a>
+    <a routerLink="/" fragment="progress">Progress Videos</a>
+      <a routerLink="/price">Price</a>
+    <a routerLink="/" fragment="enquire">Contact</a>
+
+    <a href="#" class="btn btn-outline" (click)="openEnquiry($event)">
+      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 4v10" />
+        <path d="M8 10.5l4 4 4-4" />
+        <path d="M4 15v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3" />
+      </svg>
+      Brochure
+    </a>
+    <a href="#enquire" class="btn btn-solid" (click)="openEnquiry($event)">Enquire</a>
+  </nav>
+</header>

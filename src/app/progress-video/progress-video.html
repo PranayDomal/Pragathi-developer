@@ -1,0 +1,30 @@
+<section class="progress" id="progress">
+  <div class="head">
+    <span class="eyebrow reveal">Construction</span>
+    <h2 class="title reveal">Progress Video</h2>
+
+    <div class="tabs reveal">
+      @for (t of tabs; track t.name; let i = $index) {
+        <button class="tab" [class.active]="selected() === i" (click)="selected.set(i)">
+          {{ t.name }} — {{ t.pct }}%
+        </button>
+      }
+    </div>
+  </div>
+
+  <div class="video reveal">
+    <iframe
+      src="https://drive.google.com/file/d/1yOiWS2gMPlZKWnWNPEcekUOzrhzSA8qo/preview"
+      title="Green Woods construction progress video"
+      loading="lazy"
+      allow="autoplay; fullscreen"
+      allowfullscreen
+    ></iframe>
+  </div>
+
+  <div class="status">
+    <div class="percent reveal">{{ current().pct }}%</div>
+    <p class="note reveal">{{ current().note }}</p>
+    <p class="visit reveal">Visit our site office any time — watch the towers rise floor by floor.</p>
+  </div>
+</section>

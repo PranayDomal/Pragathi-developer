@@ -1,0 +1,37 @@
+<section class="hero">
+  <div class="slides">
+    @for (s of slides; track s.src; let i = $index) {
+      <div class="slide" [class.active]="i === current()">
+        <img [src]="s.src" [alt]="s.alt" />
+      </div>
+    }
+  </div>
+  <div class="overlay"></div>
+
+  <button class="arrow prev" (click)="prev()" aria-label="Previous slide">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M15 5l-7 7 7 7" />
+    </svg>
+  </button>
+  <button class="arrow next" (click)="next()" aria-label="Next slide">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M9 5l7 7-7 7" />
+    </svg>
+  </button>
+
+  <div class="hero-content">
+    <span class="badge reveal">RERA Approved — P02200007121</span>
+<h1 class="reveal">
+  Experience Gated<br />
+  Luxury in Bachupally<br />
+  <span class="price">94 Lakhs onwards*</span>
+</h1>
+<p class="lead reveal">
+  Luxury Living across 3 Towers and 27 Floors — beside a 1100-acre urban reserve forest.
+</p>
+<div class="actions reveal">
+  <a href="#enquire" class="btn btn-solid">Book a Site Visit</a>
+  <a href="#master-plan" class="btn btn-ghost">View Floor Plans</a>
+</div>
+  </div>
+</section>

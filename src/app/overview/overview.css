@@ -1,0 +1,108 @@
+.overview {
+  padding: 72px 32px 96px;
+  background: var(--cream);
+  border-bottom: 1px solid #efe3cf;
+  text-align: center;
+}
+
+.title {
+  font-family: 'Gelasio', Georgia, serif;
+  font-weight: 700;
+  font-size: 54px;
+  line-height: 1.1;
+  color: #141414;
+}
+
+.location {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 18px;
+  font-size: 14px;
+  letter-spacing: 0.02em;
+  color: #6b6b6b;
+}
+
+.location svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* Row of 9 stats */
+.stats {
+  display: grid;
+  grid-template-columns: repeat(9, 1fr);
+  margin-top: 56px;
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 120px;
+  padding: 0 8px;
+  border-left: 1px solid #dcc7a0;
+}
+
+.stat:first-child {
+  border-left: none;
+}
+
+.value {
+  font-family: 'Gelasio', Georgia, serif;
+  font-weight: 700;
+  font-size: 36px;
+  line-height: 1.1;
+  color: #141414;
+}
+
+.value.word {
+  font-size: 26px;
+}
+
+.label {
+  margin-top: 10px;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  line-height: 1.4;
+  text-transform: uppercase;
+  color: #6b6b6b;
+}
+
+/* Fade up, same as the hero */
+.reveal {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.title.visible { transition-delay: 0.1s; }
+.location.visible { transition-delay: 0.3s; }
+.stats.visible { transition-delay: 0.6s; }
+
+/* Smaller screens: 3 per row */
+@media (max-width: 900px) {
+  .stats {
+    grid-template-columns: repeat(3, 1fr);
+    row-gap: 36px;
+  }
+
+  .stat {
+    height: auto;
+    padding-bottom: 4px;
+  }
+
+  .stat:nth-child(3n + 1) {
+    border-left: none;
+  }
+
+  .title {
+    font-size: 40px;
+  }
+}

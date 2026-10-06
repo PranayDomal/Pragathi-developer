@@ -1,0 +1,63 @@
+<div class="phone-wrap" (click)="$event.stopPropagation()" (keydown.escape)="open.set(false); $event.stopPropagation()">
+  <div class="phone">
+    <button
+      type="button"
+      class="flag-btn"
+      [class.open]="open()"
+      (click)="toggle()"
+      aria-label="Choose country code"
+      aria-haspopup="listbox"
+      [attr.aria-expanded]="open()"
+    >
+      <img class="flagimg" [src]="flagUrl(selected().iso)" alt="" />
+      <svg class="chev" viewBox="0 0 12 8" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M1.5 1.5l4.5 4.5 4.5-4.5" />
+      </svg>
+    </button>
+    <span class="code">{{ selected().dial }}</span>
+    <input
+      [id]="inputId()"
+      type="tel"
+      name="mobile"
+      placeholder="81234 56789"
+      inputmode="numeric"
+      [required]="required()"
+    />
+  </div>
+
+  @if (open()) {
+    <div class="dropdown">
+      <div class="search">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="7" />
+          <path d="M20 20l-4-4" />
+        </svg>
+        <input #searchBox type="text" placeholder="Search" [value]="query()" (input)="onSearch($event)" />
+      </div>
+
+      <ul class="countries" role="listbox">
+        @for (c of filtered(); track c.iso) {
+          <li>
+            <button
+              type="button"
+              class="opt"
+              [class.selected]="c.iso === selected().iso"
+              (click)="choose(c)"
+            >
+              <img class="flagimg" [src]="flagUrl(c.iso)" alt="" />
+              <span>{{ c.name }} ({{ c.dial }})</span>
+              @if (c.iso === selected().iso) {
+                <svg class="check" viewBox="0 0 24 24">
+                  <circle cx="12" cy="12" r="10" fill="#555" />
+                  <path d="M7.5 12.5l3 3 6-6.5" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+              }
+            </button>
+          </li>
+        } @empty {
+          <li class="none">No countries found</li>
+        }
+      </ul>
+    </div>
+  }
+</div>

@@ -1,0 +1,49 @@
+<!-- Green heading band -->
+<section class="band">
+  <h1 class="reveal">Specifications</h1>
+  <p class="reveal">
+    Build quality, material standards, and finishes — every detail of your future home.
+  </p>
+</section>
+
+<!-- Tab buttons: they stay under the header while you scroll -->
+<nav class="filters" aria-label="Specification types">
+  <div class="pills">
+    @for (t of tabs; track t.id; let i = $index) {
+      <button type="button" class="pill" [class.active]="active() === i" (click)="select(i)">
+        {{ t.label }}
+      </button>
+    }
+  </div>
+</nav>
+
+<!-- Cards -->
+<section class="specs">
+  <div class="grid">
+    @for (c of cards(); track c.title) {
+      <article class="card reveal">
+        <header class="head">
+          <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            @for (d of c.icon; track d) {
+              <path [attr.d]="d" />
+            }
+          </svg>
+          <h2>{{ c.title }}</h2>
+        </header>
+
+        <dl class="rows">
+          @for (r of c.rows; track r[0]) {
+            <div class="row">
+              <dt>{{ r[0] }}</dt>
+              <dd>{{ r[1] }}</dd>
+            </div>
+          }
+        </dl>
+      </article>
+    }
+  </div>
+
+  <div class="cta-wrap">
+    <a href="#" class="cta reveal" (click)="openEnquiry($event)">Request Detailed Spec Sheet</a>
+  </div>
+</section>

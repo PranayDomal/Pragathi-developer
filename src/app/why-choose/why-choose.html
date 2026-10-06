@@ -1,0 +1,64 @@
+<section class="why">
+  <!-- Left: image carousel (crossfade, fades in like the hero) -->
+  <div class="gallery reveal reveal-fade">
+    @for (s of slides; track s.src; let i = $index) {
+      <img class="slide" [class.active]="i === current()" [src]="s.src" [alt]="s.alt" />
+    }
+
+    <button class="arrow prev" (click)="prev()" aria-label="Previous image">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M15 5l-7 7 7 7" />
+      </svg>
+    </button>
+    <button class="arrow next" (click)="next()" aria-label="Next image">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M9 5l7 7-7 7" />
+      </svg>
+    </button>
+
+    <div class="dots">
+      @for (s of slides; track s.src; let i = $index) {
+        <button
+          class="dot"
+          [class.active]="i === current()"
+          (click)="go(i)"
+          [attr.aria-label]="'Go to image ' + (i + 1)"
+        ></button>
+      }
+    </div>
+  </div>
+
+  <!-- Right: text content (slides in from the right) -->
+  <div class="content">
+    <span class="eyebrow reveal reveal-right">Why Choose</span>
+    <h2 class="reveal reveal-right">Green Woods?</h2>
+    <p class="intro reveal reveal-right">
+      At Green Woods, every detail has been envisioned to create more than just homes — it
+      builds a vibrant community where openness, design, and lifestyle come together
+      seamlessly.
+    </p>
+
+    <div class="callout reveal reveal-right">
+      <span class="callout-title">Large L-Shaped Balconies on 4 Sides</span>
+      <p>
+        Large balconies (6'7" wide) on 4 sides of the towers create a connection between your
+        living space and the surrounding greenery — designed to maximize fresh forest air and
+        panoramic views.
+      </p>
+    </div>
+
+    <ul class="points reveal reveal-right">
+      @for (p of points; track p) {
+        <li>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="9.5" />
+            <path d="M8 12.5l2.7 2.7L16 9.8" />
+          </svg>
+          <span>{{ p }}</span>
+        </li>
+      }
+    </ul>
+
+        <a href="#enquire" class="cta reveal reveal-right" (click)="openEnquiry($event)">Enquire Now</a>
+  </div>
+</section>

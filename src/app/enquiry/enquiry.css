@@ -1,0 +1,312 @@
+.enquiry {
+  padding: 80px 32px 96px;
+  background: var(--cream);
+  border-bottom: 1px solid #efe3cf;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: 1.27fr 1fr;
+  gap: 40px;
+  align-items: start;
+}
+
+.eyebrow {
+  display: inline-block;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--terracotta);
+}
+
+h2 {
+  font-family: 'Gelasio', Georgia, serif;
+  font-weight: 700;
+  color: #141414;
+}
+
+/* ---------- Form card ---------- */
+.card {
+  padding: 40px 40px 44px;
+  border-radius: 16px;
+  background: #fbf7ef;
+  box-shadow: 0 20px 50px rgba(70, 50, 20, 0.12);
+}
+
+.card h2 {
+  margin-top: 10px;
+  font-size: 38px;
+  line-height: 1.15;
+}
+
+.sub {
+  margin-top: 12px;
+  font-size: 15px;
+  line-height: 1.5;
+  color: #6b6b6b;
+}
+
+.form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px 16px;
+  margin-top: 28px;
+}
+
+.full {
+  grid-column: 1 / -1;
+}
+
+.field label,
+.loan-label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: #2b2b2b;
+}
+
+/* ---------- Text fields, dropdowns, message box ---------- */
+input[type='text'],
+input[type='email'],
+select,
+textarea {
+  width: 100%;
+  border: none;
+  border-radius: 8px;
+  background: #f1e9d8;
+  color: #1c1c1c;
+  font-family: inherit;
+  font-size: 16px;
+  transition: background-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+input[type='text'],
+input[type='email'],
+select {
+  height: 44px;
+  padding: 0 16px;
+}
+
+/* Focused field: white background and green border */
+input[type='text']:focus,
+input[type='email']:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  background-color: #fff;
+  box-shadow: inset 0 0 0 2px #1f7a3a;
+}
+
+/* Dropdown arrows */
+select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%23222' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 16px center;
+  cursor: pointer;
+}
+
+::placeholder {
+  color: #9b9486;
+}
+
+textarea {
+  display: block;
+  height: 93px;
+  padding: 12px 16px;
+  resize: vertical;
+}
+
+/* ---------- Home loan box ---------- */
+.loan {
+  padding: 12px 18px 14px;
+  border-radius: 8px;
+  background: #f1e9d8;
+}
+
+.radios {
+  display: flex;
+  gap: 24px;
+}
+
+.radios label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 16px;
+  color: #1c1c1c;
+  cursor: pointer;
+}
+
+/* ---------- Get OTP button + messages ---------- */
+.otp {
+  height: 44px;
+  padding: 0 28px;
+  border: none;
+  border-radius: 4px;
+  background: var(--terracotta);
+  color: #fff;
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.otp:hover {
+  background: #a9532d;
+}
+
+.sent {
+  padding: 10px 14px;
+  border-radius: 8px;
+  background: #e4eddd;
+  color: var(--green-dark);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.safe {
+  font-size: 13px;
+  color: #6b6b6b;
+}
+
+/* ---------- Visit us ---------- */
+.visit {
+  padding-top: 18px;
+}
+
+.visit h2 {
+  margin-top: 10px;
+  font-size: 31px;
+  line-height: 1.25;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-top: 28px;
+}
+
+.info li {
+  display: flex;
+  gap: 14px;
+}
+
+.info svg {
+  flex-shrink: 0;
+  width: 22px;
+  height: 22px;
+  margin-top: 2px;
+  color: var(--terracotta);
+}
+
+.lbl {
+  display: block;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #7a7a7a;
+}
+
+.val {
+  display: block;
+  font-size: 15px;
+  line-height: 1.6;
+  color: #1c1c1c;
+}
+
+a.val:hover {
+  color: var(--terracotta);
+}
+
+/* Buttons */
+.wa,
+.book {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  height: 48px;
+  border-radius: 4px;
+  font-size: 17px;
+  font-weight: 600;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.wa svg,
+.book svg {
+  width: 22px;
+  height: 22px;
+}
+
+.wa {
+  margin-top: 32px;
+  background: #25d366;
+  color: #fff;
+}
+
+.wa:hover {
+  background: #1fb956;
+}
+
+.book {
+  margin-top: 12px;
+  border: 1px solid #e6d7b5;
+  color: #1c1c1c;
+}
+
+.book:hover {
+  border-color: var(--terracotta);
+  color: var(--terracotta);
+}
+
+/* ---------- Fade up, like the other sections ---------- */
+.reveal {
+  opacity: 0;
+  transform: translateY(22px);
+  transition:
+    opacity 0.8s ease var(--delay, 0s),
+    transform 0.8s ease var(--delay, 0s);
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.card.visible { --delay: 0.1s; }
+.visit.visible { --delay: 0.3s; }
+
+/* ---------- Smaller screens ---------- */
+@media (max-width: 900px) {
+  .enquiry {
+    padding: 56px 20px;
+  }
+
+  .layout {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+}
+
+@media (max-width: 560px) {
+  .card {
+    padding: 28px 20px 32px;
+  }
+
+  .card h2 {
+    font-size: 30px;
+  }
+
+  .form {
+    grid-template-columns: 1fr;
+  }
+}

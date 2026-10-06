@@ -1,0 +1,66 @@
+<section class="master" id="master-plan">
+  <div class="head">
+    <span class="eyebrow reveal">Master Plan</span>
+    <h2 class="title reveal">The Site, Thoughtfully Planned</h2>
+    <p class="subtitle reveal">3.05 acres · 3 Towers · 27 Floors each · 477 Units · 60% Open Spaces.</p>
+  </div>
+
+  <div class="layout">
+    <!-- Map with clickable numbers -->
+    <div class="map-card reveal">
+      <div class="map">
+        <img
+          src="assets/img/master-plan/masterPlaneMap.jpg"
+          alt="Green Woods Master Plan — Block A, B, C with clubhouse, pool, driveways, gates"
+        />
+        @for (p of items; track p.n) {
+                    <button
+            class="pin"
+            [class.active]="shown() === p.n"
+            [style.left.%]="p.x"
+            [style.top.%]="p.y"
+            (mouseenter)="hover.set(p.n)"
+            (mouseleave)="hover.set(null)"
+            (click)="select(p.n)"
+            [attr.aria-label]="p.n + ': ' + p.label"
+          >
+            {{ p.n }}
+          </button>
+        }
+      </div>
+    </div>
+
+    <!-- Legend (slides in from the right) -->
+    <aside class="legend reveal reveal-right">
+      <span class="eyebrow">Legend</span>
+      <h3>Master Plan Key</h3>
+      <ul>
+        @for (p of items; track p.n) {
+          <li>
+                        <button
+              class="row"
+              [class.active]="shown() === p.n"
+              (mouseenter)="hover.set(p.n)"
+              (mouseleave)="hover.set(null)"
+              (click)="select(p.n)"
+            >
+              <span class="num">{{ p.n }}</span>
+              <span class="text">{{ p.label }}</span>
+            </button>
+          </li>
+        }
+      </ul>
+    </aside>
+  </div>
+
+  <div class="cta-wrap">
+    <a href="#floor-plans" class="cta reveal">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="4" y="4" width="16" height="5" rx="1.5" />
+        <path d="M5.5 9v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2-2V9" />
+        <path d="M10 13h4" />
+      </svg>
+      View Floor Plans
+    </a>
+  </div>
+</section>

@@ -1,0 +1,232 @@
+.master {
+  padding: 80px 32px;
+  background: var(--cream);
+  border-bottom: 1px solid #efe3cf;
+  overflow: hidden; /* stops the sliding legend from causing a sideways scrollbar */
+}
+
+/* ---------- Heading ---------- */
+.head {
+  text-align: center;
+}
+
+.eyebrow {
+  display: inline-block;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--terracotta);
+}
+
+.title {
+  margin-top: 10px;
+  font-family: 'Gelasio', Georgia, serif;
+  font-weight: 700;
+  font-size: 46px;
+  line-height: 1.15;
+  color: #141414;
+}
+
+.subtitle {
+  margin-top: 14px;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #555;
+}
+
+/* ---------- Map + legend ---------- */
+.layout {
+  display: grid;
+  grid-template-columns: 2.1fr 1fr;
+  gap: 40px;
+  align-items: start;
+  margin-top: 48px;
+}
+
+.map-card {
+  background: #fff;
+  border: 1px solid #efe3cf;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
+  overflow: hidden;
+}
+
+.map {
+  position: relative;
+}
+
+.map img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* Numbered markers */
+.pin {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  display: grid;
+  place-items: center;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  background: var(--green-dark);
+  color: #fff;
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.pin.active {
+  background: var(--terracotta);
+  transform: translate(-50%, -50%) scale(1.35);
+  z-index: 2;
+}
+
+/* Legend card */
+.legend {
+  padding: 30px 28px 32px;
+  background: #f2f6f0;
+  border: 1px solid #e3e9de;
+  border-radius: 12px;
+}
+
+.legend h3 {
+  margin-top: 10px;
+  font-family: 'Gelasio', Georgia, serif;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 1.2;
+  color: #141414;
+}
+
+.legend ul {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 28px;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: calc(100% + 16px);
+  margin: 0 -8px;
+  padding: 4px 8px;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  font-family: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.row.active {
+  background: #fff;
+}
+
+.num {
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--green-dark);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  transition: background 0.2s ease;
+}
+
+.row.active .num {
+  background: var(--terracotta);
+}
+
+.text {
+  font-size: 14px;
+  line-height: 1.3;
+  color: #2b2b2b;
+}
+
+.row.active .text {
+  font-weight: 600;
+}
+
+/* ---------- Button ---------- */
+.cta-wrap {
+  margin-top: 48px;
+  text-align: center;
+}
+
+.cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  height: 48px;
+  padding: 0 32px;
+  background: var(--terracotta);
+  color: #fff;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border-radius: 4px;
+}
+
+.cta svg {
+  width: 20px;
+  height: 20px;
+}
+
+.cta:hover {
+  background: #a9532d;
+}
+
+/* ---------- Scroll animation ---------- */
+.reveal {
+  opacity: 0;
+  transform: translateY(22px);
+  transition:
+    opacity 0.8s ease var(--delay, 0s),
+    transform 0.8s ease var(--delay, 0s);
+}
+
+/* Legend slides in from the right (right to left) */
+.reveal-right {
+  transform: translateX(80px);
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* Heading pieces appear one after another; --delay only applies while appearing */
+.eyebrow.visible { --delay: 0.1s; }
+.title.visible { --delay: 0.3s; }
+.subtitle.visible { --delay: 0.5s; }
+
+/* ---------- Smaller screens ---------- */
+@media (max-width: 900px) {
+  .master {
+    padding: 56px 20px;
+  }
+
+  .layout {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+
+  .title {
+    font-size: 32px;
+  }
+}

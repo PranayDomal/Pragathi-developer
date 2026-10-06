@@ -1,0 +1,28 @@
+<!-- Green heading band -->
+<section class="band">
+  <h1 class="reveal">Gallery</h1>
+  <p class="reveal">Elevations, landscape, clubhouse, and interiors of Green Woods.</p>
+</section>
+
+<!-- Category buttons: they stay under the header while you scroll -->
+<nav class="filters" aria-label="Gallery categories">
+  <div class="pills">
+    @for (c of categories; track c.id; let i = $index) {
+      <button type="button" class="pill" [class.active]="active() === i" (click)="select(i)">
+        {{ c.label }} <span class="count">({{ c.photos.length }})</span>
+      </button>
+    }
+  </div>
+</nav>
+
+<!-- Photos -->
+<section class="gallery">
+  <div class="grid">
+    @for (p of photos(); track p.src) {
+      <figure class="photo" [class.pop]="intro()">
+        <img [src]="p.src" [alt]="p.caption" />
+        <figcaption>{{ p.caption }}</figcaption>
+      </figure>
+    }
+  </div>
+</section>

@@ -1,0 +1,179 @@
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 22px clamp(16px, 2.5vw, 57px);
+  background: var(--cream);
+  width: 100%;
+}
+
+/* Logo + "By Pragathi Developers" */
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-shrink: 0;
+}
+
+.logo {
+  height: clamp(60px, 5.2vw, 108px);
+  width: auto;
+  mix-blend-mode: multiply;
+}
+
+.by {
+  font-size: clamp(9px, 0.78vw, 15px);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #7a7a7a;
+  line-height: 1.7;
+  white-space: nowrap;
+}
+
+/* Navigation */
+.nav {
+  display: flex;
+  align-items: center;
+  gap: clamp(10px, 2vw, 42px);
+  font-size: clamp(14px, 0.9vw, 18px);
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.nav > a:hover,
+
+.dropdown-toggle:hover {
+  color: var(--terracotta);
+}
+
+/* Dropdown */
+.dropdown {
+  position: relative;
+}
+
+/* Invisible strip under the link, so the mouse can travel down to the menu
+   without the menu closing */
+.dropdown::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: -24px;
+  right: -24px;
+  height: 22px;
+}
+
+.dropdown-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.chev {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  transition: transform 0.2s ease;
+}
+
+.dropdown:hover .chev,
+.dropdown:has(:focus-visible) .chev {
+  transform: rotate(180deg);
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 50%;
+  width: 225px;
+  overflow: hidden;
+  border: 1px solid #e3e9de;
+  border-radius: 8px;
+  background: #fffdf8;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+
+  /* Hidden by default. The 0.3s delay on "visibility" is the grace period
+     before the menu disappears after the mouse leaves. */
+  opacity: 0;
+  visibility: hidden;
+  transform: translate(-50%, 6px);
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease,
+    visibility 0s linear 0.3s;
+}
+
+/* Open on hover, or when reached with the keyboard (Tab) */
+.dropdown:hover .dropdown-menu,
+.dropdown:has(:focus-visible) .dropdown-menu {
+  opacity: 1;
+  visibility: visible;
+  transform: translate(-50%, 0);
+  transition-delay: 0s;
+}
+
+.dropdown-menu a {
+  display: flex;
+  align-items: center;
+  height: 40px;
+  padding: 0 16px;
+  font-weight: 500;
+}
+
+.dropdown-menu a:hover,
+.dropdown-menu a.active {
+  background: #eef4e9;
+  color: var(--green-dark);
+}
+
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 37px;
+  padding: 0 16px;
+  font-size: clamp(14px, 0.9vw, 17px);
+  font-weight: 600;
+  transition: background 0.2s, border-color 0.2s, color 0.2s;
+}
+
+.icon {
+  width: 17px;
+  height: 17px;
+  flex-shrink: 0;
+}
+
+.btn-outline {
+  border: 1px solid #d9c9a3;
+  border-radius: 999px;
+  background: #fffaf0;
+  color: var(--text);
+}
+
+.btn-outline:hover {
+  border-color: var(--terracotta);
+  color: var(--terracotta);
+}
+
+.btn-solid {
+  height: 36px;
+  background: var(--terracotta);
+  color: #fff;
+  border-radius: 6px;
+}
+
+.btn-solid:hover {
+  background: #a9532d;
+}
+
+/* The nav's link hover color would turn the Enquire text orange on an orange
+   background, so keep it white */
+.nav > a.btn-solid:hover {
+  color: #fff;
+}

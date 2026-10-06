@@ -1,0 +1,281 @@
+/* Dark blurred area behind the card */
+.backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 28px 16px;
+  background: rgba(8, 22, 14, 0.6);
+  backdrop-filter: blur(8px);
+  animation: fade 0.25s ease;
+}
+
+/* The card itself; it scrolls inside when the screen is short */
+.dialog {
+  width: 100%;
+  max-width: 448px;
+  max-height: calc(100vh - 56px);
+  overflow-y: auto;
+  border-radius: 12px;
+  background: #faf6ee;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.4);
+  animation: pop 0.3s ease;
+}
+
+/* Book a Site Visit is a little wider */
+.dialog.wide {
+  max-width: 512px;
+}
+
+.inner {
+  position: relative;
+  padding: 32px;
+}
+
+@keyframes fade {
+  from { opacity: 0; }
+}
+
+@keyframes pop {
+  from {
+    opacity: 0;
+    transform: translateY(16px) scale(0.98);
+  }
+}
+
+/* ---------- Close button ---------- */
+.close {
+  position: absolute;
+  top: 18px;
+  right: 22px;
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: #333;
+  cursor: pointer;
+}
+
+.close:hover {
+  color: var(--terracotta);
+}
+
+.close svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* ---------- Heading ---------- */
+h2 {
+  font-family: 'Gelasio', Georgia, serif;
+  font-weight: 700;
+  font-size: 30px;
+  line-height: 1.2;
+  letter-spacing: 0.06em;
+  text-align: center;
+  text-transform: uppercase;
+  color: #141414;
+}
+
+.sub {
+  margin-top: 12px;
+  font-size: 14px;
+  line-height: 1.5;
+  text-align: center;
+  color: #6b6b6b;
+}
+
+/* ---------- Fields ---------- */
+.form {
+  margin-top: 24px;
+}
+
+.field + .field {
+  margin-top: 18px;
+}
+
+/* Two fields side by side (Book a Site Visit) */
+.row2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px 16px;
+  margin-top: 18px;
+}
+
+.row2 > * {
+  min-width: 0;
+}
+
+.row2 .field + .field {
+  margin-top: 0;
+}
+
+label,
+.loan-label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: #2b2b2b;
+}
+
+input[type='text'],
+input[type='email'],
+input[type='date'],
+select {
+  display: block;
+  width: 100%;
+  height: 44px;
+  padding: 0 16px;
+  border: none;
+  border-radius: 8px;
+  background: #f1e9d8;
+  color: #1c1c1c;
+  font-family: inherit;
+  font-size: 16px;
+  transition: background-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+input::placeholder {
+  color: #9b9486;
+}
+
+/* Focused field: white background and green border */
+input[type='text']:focus,
+input[type='email']:focus,
+input[type='date']:focus,
+select:focus {
+  outline: none;
+  background-color: #fff;
+  box-shadow: inset 0 0 0 2px #1f7a3a;
+}
+
+select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%23222' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 16px center;
+  cursor: pointer;
+}
+
+/* Home loan box */
+.loan {
+  margin-top: 18px;
+  padding: 12px 18px 14px;
+  border-radius: 8px;
+  background: #f1e9d8;
+}
+
+.radios {
+  display: flex;
+  gap: 24px;
+}
+
+.radios label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  font-size: 16px;
+  font-weight: 400;
+  letter-spacing: 0;
+  text-transform: none;
+  color: #1c1c1c;
+  cursor: pointer;
+}
+
+/* ---------- Get OTP button ---------- */
+.otp {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  width: 100%;
+  height: 48px;
+  margin-top: 16px;
+  border: none;
+  border-radius: 6px;
+  background: #0e1a13;
+  color: #fff;
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.otp:hover {
+  background: #1c2e23;
+}
+
+.arrow {
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--terracotta);
+}
+
+.arrow svg {
+  width: 14px;
+  height: 14px;
+}
+
+.note {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 16px;
+  font-size: 14px;
+  color: #6b6b6b;
+}
+
+.note svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* ---------- Thank-you view ---------- */
+.done {
+  margin-top: 24px;
+  text-align: center;
+}
+
+.done h3 {
+  font-family: 'Gelasio', Georgia, serif;
+  font-size: 24px;
+  color: var(--green-dark);
+}
+
+.done p {
+  margin-top: 10px;
+  font-size: 15px;
+  line-height: 1.5;
+  color: #555;
+}
+
+.done .otp {
+  margin-top: 24px;
+}
+
+/* ---------- Small screens ---------- */
+@media (max-width: 480px) {
+  .inner {
+    padding: 28px 20px;
+  }
+
+  .row2 {
+    grid-template-columns: 1fr;
+  }
+}

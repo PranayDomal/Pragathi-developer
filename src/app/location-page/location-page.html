@@ -1,0 +1,111 @@
+<!-- 1. Green intro band -->
+<section class="intro">
+  <h1 class="reveal">Connected to Everything That Matters</h1>
+  <p class="reveal">
+    Pragathi Nagar, Bachupally, Hyderabad — 500043 · 5 min to ORR Exit 5 · 20 min to HITEC
+    City · 40 min to RGIA Airport.
+  </p>
+</section>
+
+<!-- 2. Map -->
+<section class="map-section">
+  <div class="map-wrap reveal reveal-pop">
+    <div class="map-card">
+      <iframe
+        title="Green Woods location on Google Maps"
+        src="https://www.google.com/maps?q=HC24%2B85,+Pragathi+Nagar,+Bachupally,+Hyderabad,+Telangana+500043&amp;output=embed"
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+        allowfullscreen
+      ></iframe>
+    </div>
+    <p class="caption">
+      Pinned at Pragathi Green Woods, Pragathi Nagar, Bachupally, Hyderabad — 500043.
+    </p>
+  </div>
+</section>
+
+<!-- 3. Why Bachupally -->
+<section class="why">
+  <div class="why-head">
+    <span class="eyebrow reveal">Why Bachupally</span>
+    <h2 class="reveal">North Hyderabad's Growth Corridor</h2>
+    <p class="sub reveal">
+      Three reasons why families and investors are choosing Bachupally — and why now.
+    </p>
+  </div>
+
+  <div class="cards">
+    <article class="card reveal">
+      <div class="icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 17l6-6 4 4 8-8" />
+          <path d="M15 7h6v6" />
+        </svg>
+      </div>
+      <span class="tag">Investment Growth</span>
+      <h3>High capital appreciation</h3>
+      <p>
+        North Hyderabad has seen strong price appreciation thanks to its proximity to the ORR,
+        IT corridor, and upcoming infrastructure. Early buyers in Bachupally are positioned for
+        long-term upside.
+      </p>
+    </article>
+
+    <article class="card reveal">
+      <div class="icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 6h11v10H3z" />
+          <path d="M14 9h4l3 3v4h-7" />
+          <circle cx="7" cy="17.5" r="1.8" />
+          <circle cx="17" cy="17.5" r="1.8" />
+        </svg>
+      </div>
+      <span class="tag">Infrastructure</span>
+      <h3>Connected by design</h3>
+      <p>
+        Just 5 minutes from ORR Exit 5, 20 minutes to HITEC City and the Financial District, and
+        40 minutes to RGIA Airport. Metro Phase II expansion brings rail connectivity even
+        closer.
+      </p>
+    </article>
+
+    <article class="card reveal">
+      <div class="icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 20s-8-5-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 9c0 6-8 11-8 11z" />
+        </svg>
+      </div>
+      <span class="tag">Quality of Life</span>
+      <h3>Greener, calmer, healthier</h3>
+      <p>
+        60% open spaces, low-density living, 10+ international schools within 5 km, and quick
+        access to top hospitals — Bachupally offers the calm of suburbia with the convenience of
+        the city.
+      </p>
+    </article>
+  </div>
+</section>
+
+<!-- 4. Landmarks and schools -->
+<section class="lists">
+  <div class="list reveal reveal-left">
+    <h2>Major Landmarks</h2>
+    <p class="note">Drive-time from Green Woods</p>
+    <ul>
+      @for (l of landmarks; track l.name) {
+        <li><span>{{ l.name }}</span><strong>{{ l.time }}</strong></li>
+      }
+    </ul>
+  </div>
+
+  <div class="list reveal reveal-right">
+    <h2>Educational Institutions</h2>
+    <p class="note">10+ international schools within 5km</p>
+    <ul>
+      @for (s of schools; track s.name) {
+        <li><span>{{ s.name }}</span><strong>{{ s.time }}</strong></li>
+      }
+    </ul>
+  </div>
+</section>

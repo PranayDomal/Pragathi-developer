@@ -1,0 +1,63 @@
+<section class="connect" id="location">
+  <div class="head">
+    <span class="eyebrow reveal">Location &amp; Connectivity</span>
+    <h2 class="title reveal">Connected to everything that matters</h2>
+    <p class="subtitle reveal">
+      Pragathi Nagar, Bachupally, Hyderabad — 500043 · 5 min to ORR Exit 5 · 20 min to HITEC
+      City · 40 min to RGIA Airport.
+    </p>
+  </div>
+
+  <div class="layout">
+    <!-- Left: Google Map (slides in from the left) -->
+    <div class="map-col reveal reveal-left">
+      <div class="map-card">
+        <iframe
+          title="Green Woods location on Google Maps"
+          src="https://www.google.com/maps?q=HC24%2B85,+Pragathi+Nagar,+Bachupally,+Hyderabad,+Telangana+500043&amp;output=embed"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          allowfullscreen
+        ></iframe>
+      </div>
+      <a
+        class="open-link"
+        href="https://www.google.com/maps?q=HC24%2B85,+Pragathi+Nagar,+Bachupally,+Hyderabad,+Telangana+500043"
+        target="_blank"
+        rel="noopener"
+      >
+        Open in Google Maps →
+      </a>
+    </div>
+
+    <!-- Right: lists (slides in from the right) -->
+    <div class="lists reveal reveal-right">
+      <div class="group">
+        <h3>Major Landmarks</h3>
+        <ul>
+          @for (l of landmarks; track l.name) {
+            <li><span>{{ l.name }}</span><strong>{{ l.time }}</strong></li>
+          }
+        </ul>
+      </div>
+
+      <div class="group">
+        <h3>Hospitals</h3>
+        <ul>
+          @for (h of hospitals; track h.name) {
+            <li><span>{{ h.name }}</span><strong>{{ h.time }}</strong></li>
+          }
+        </ul>
+      </div>
+
+      <div class="group">
+        <h3>Schools</h3>
+        <ul>
+          @for (s of schools; track s.name) {
+            <li><span>{{ s.name }}</span><strong>{{ s.time }}</strong></li>
+          }
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>

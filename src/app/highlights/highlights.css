@@ -1,0 +1,76 @@
+.stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 64px;
+  padding: 80px 32px;
+  background: var(--cream);
+  border-bottom: 1px solid #efe3cf;
+  overflow: hidden; /* stops the sliding blocks from causing a sideways scrollbar */
+}
+
+/* Big number + small label */
+.figure {
+  display: flex;
+  align-items: baseline;
+  gap: 15px;
+}
+
+.num {
+  font-family: 'Gelasio', Georgia, serif;
+  font-weight: 700;
+  font-size: 60px;
+  line-height: 1.1;
+  color: var(--green-dark);
+}
+
+.unit {
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: #7a7a7a;
+}
+
+h2 {
+  margin-top: 8px;
+  font-family: 'Gelasio', Georgia, serif;
+  font-weight: 700;
+  font-size: 30px;
+  line-height: 1.25;
+  color: #1c1c1c;
+}
+
+p {
+  margin-top: 18px;
+  font-size: 15px;
+  line-height: 1.75;
+  color: #6b6b6b;
+}
+
+/* Slide-in animation from the sides */
+.reveal {
+  opacity: 0;
+  transition: opacity 0.9s ease, transform 0.9s ease;
+}
+
+.reveal-left {
+  transform: translateX(-80px);
+}
+
+.reveal-right {
+  transform: translateX(80px);
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Stack on small screens */
+@media (max-width: 800px) {
+  .stats {
+    grid-template-columns: 1fr;
+    gap: 48px;
+    padding: 56px 20px;
+  }
+}

@@ -1,0 +1,141 @@
+<!-- 1. Green heading band -->
+<section class="band">
+  <span class="eyebrow reveal">PRICING</span>
+  <h1 class="reveal">Embark on New Life Experiences</h1>
+  <p class="reveal">
+    Starting <strong>₹ 90 Lakhs*</strong> onwards. Transparent breakdown of taxes and fees below.
+  </p>
+</section>
+
+<!-- 2. Price cards -->
+<section class="plans">
+  <div class="plan-grid">
+    @for (p of plans; track p.title) {
+      <article class="plan reveal">
+        <div class="plan-header">
+          <h2>{{ p.title }}</h2>
+          <p class="plan-sub">{{ p.sub }}</p>
+        </div>
+
+        <div class="price-box">
+          <span class="price-lbl">Starting Price</span>
+          <div class="price-val">{{ p.price }}</div>
+        </div>
+
+        <dl class="plan-rows">
+          <div class="plan-row">
+            <dt>Size</dt>
+            <dd>{{ p.size }}</dd>
+          </div>
+          <div class="plan-row">
+            <dt>Configurations</dt>
+            <dd>{{ p.variants }}</dd>
+          </div>
+        </dl>
+
+        <button type="button" class="enq" (click)="openEnquiry()">ENQUIRE NOW</button>
+      </article>
+    }
+  </div>
+</section>
+
+<!-- 3. Taxes and fees -->
+<section class="costs">
+  <h2 class="reveal">What goes into the total cost?</h2>
+  <p class="sub reveal">Indicative Telangana taxes &amp; statutory fees on the registered sale value.</p>
+
+  <div class="taxes">
+    @for (t of taxes; track t.name) {
+      <div class="tax reveal">
+        <span class="pct">{{ t.value }}%</span>
+        <span class="name">{{ t.name }}</span>
+      </div>
+    }
+  </div>
+
+  <div class="total reveal">
+    <div class="total-content">
+      <span class="total-lbl">Total add-on charges on top of base price</span>
+      <strong class="total-pct">{{ totalTax }}%</strong>
+    </div>
+  </div>
+</section>
+
+<!-- 4. EMI calculator -->
+<section class="emi">
+  <h2 class="reveal">EMI Calculator</h2>
+  <p class="sub reveal">
+    Estimate your monthly home loan repayment. Default rate 8.5% p.a., tenure 20 years.
+  </p>
+
+  <div class="calc reveal">
+    <div class="sliders">
+      <!-- Loan Amount Slider -->
+      <div class="field">
+        <div class="field-head">
+          <label for="loan">Loan Amount</label>
+          <span class="val-display">₹ {{ formatLoanDisplay(loan()) }}</span>
+        </div>
+        <input 
+          id="loan" 
+          type="range" 
+          min="500000" 
+          max="50000000" 
+          step="100000" 
+          [value]="loan()" 
+          (input)="onLoan($event)" 
+        />
+      </div>
+
+      <!-- Tenure Slider -->
+      <div class="field">
+        <div class="field-head">
+          <label for="years">Tenure (years)</label>
+          <span class="val-display">{{ years() }}</span>
+        </div>
+        <input 
+          id="years" 
+          type="range" 
+          min="5" 
+          max="30" 
+          step="1" 
+          [value]="years()" 
+          (input)="onYears($event)" 
+        />
+      </div>
+
+      <!-- Interest Rate Slider -->
+      <div class="field">
+        <div class="field-head">
+          <label for="rate">Interest Rate (% p.a.)</label>
+          <span class="val-display">{{ rate().toFixed(2) }}</span>
+        </div>
+        <input 
+          id="rate" 
+          type="range" 
+          min="6" 
+          max="14" 
+          step="0.05" 
+          [value]="rate()" 
+          (input)="onRate($event)" 
+        />
+      </div>
+    </div>
+
+    <!-- Results Box -->
+    <div class="results">
+      <div class="res">
+        <span class="lbl">MONTHLY EMI</span>
+        <strong>{{ show(emi()) }}</strong>
+      </div>
+      <div class="res">
+        <span class="lbl">TOTAL INTEREST</span>
+        <strong>{{ show(totalInterest()) }}</strong>
+      </div>
+      <div class="res">
+        <span class="lbl">TOTAL PAYABLE</span>
+        <strong>{{ show(totalPayable()) }}</strong>
+      </div>
+    </div>
+  </div>
+</section>

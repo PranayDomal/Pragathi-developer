@@ -1,0 +1,227 @@
+.why {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 64px;
+  align-items: center;
+  padding: 96px 32px;
+  background: var(--cream);
+  border-bottom: 1px solid #efe3cf;
+  overflow: hidden; /* stops the sliding text from causing a sideways scrollbar */
+}
+
+/* ---------- Carousel ---------- */
+.gallery {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
+}
+
+/* Crossfade between the 5 images, same as the hero */
+.slide {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 1.2s ease;
+}
+
+.slide.active {
+  opacity: 1;
+}
+
+.arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  background: rgba(0, 0, 0, 0.3);
+  color: #fff;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.arrow:hover {
+  background: rgba(0, 0, 0, 0.55);
+}
+
+.arrow svg {
+  width: 18px;
+  height: 18px;
+}
+
+.prev { left: 12px; }
+.next { right: 12px; }
+
+.dots {
+  position: absolute;
+  bottom: 14px;
+  left: 0;
+  right: 0;
+  z-index: 2;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.55);
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+}
+
+.dot.active {
+  background: #fff;
+  transform: scale(1.3);
+}
+
+/* ---------- Text content ---------- */
+.eyebrow {
+  display: inline-block;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--terracotta);
+}
+
+h2 {
+  margin-top: 14px;
+  font-family: 'Gelasio', Georgia, serif;
+  font-weight: 700;
+  font-size: 54px;
+  line-height: 1.1;
+  color: #141414;
+}
+
+.intro {
+  margin-top: 22px;
+  font-size: 17px;
+  line-height: 1.7;
+  color: #555;
+}
+
+/* Boxed highlight */
+.callout {
+  margin-top: 28px;
+  padding: 20px 24px;
+  border-left: 4px solid var(--terracotta);
+  background: rgba(255, 255, 255, 0.45);
+}
+
+.callout-title {
+  display: block;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--terracotta);
+}
+
+.callout p {
+  margin-top: 10px;
+  font-size: 13px;
+  line-height: 1.75;
+  color: #666;
+}
+
+/* Checklist */
+.points {
+  margin-top: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.points li {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  font-size: 15px;
+  line-height: 1.6;
+  color: #2b2b2b;
+}
+
+.points svg {
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  margin-top: 3px;
+  color: var(--green-dark);
+}
+
+/* Button */
+.cta {
+  display: inline-block;
+  margin-top: 34px;
+  padding: 14px 24px;
+  background: var(--terracotta);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border-radius: 4px;
+  transition: background 0.2s;
+}
+
+.cta:hover {
+  background: #a9532d;
+}
+
+/* ---------- Scroll animation ---------- */
+.reveal {
+  opacity: 0;
+  transition: opacity 0.9s ease, transform 0.9s ease;
+}
+
+/* Image block: fades up, like the hero */
+.reveal-fade {
+  transform: translateY(22px);
+}
+
+/* Text: slides in from the right, like the highlights section */
+.reveal-right {
+  transform: translateX(80px);
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* Text pieces appear one after another */
+.gallery.visible { transition-delay: 0.1s; }
+.content > :nth-child(1).visible { transition-delay: 0.1s; }
+.content > :nth-child(2).visible { transition-delay: 0.2s; }
+.content > :nth-child(3).visible { transition-delay: 0.3s; }
+.content > :nth-child(4).visible { transition-delay: 0.4s; }
+.content > :nth-child(5).visible { transition-delay: 0.5s; }
+.content > :nth-child(6).visible { transition-delay: 0.6s; }
+
+/* ---------- Small screens ---------- */
+@media (max-width: 900px) {
+  .why {
+    grid-template-columns: 1fr;
+    gap: 40px;
+    padding: 56px 20px;
+  }
+
+  h2 {
+    font-size: 40px;
+  }
+}

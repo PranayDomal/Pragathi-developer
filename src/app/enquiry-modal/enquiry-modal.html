@@ -1,0 +1,192 @@
+@if (modal.isOpen()) {
+  <div class="backdrop" (click)="onBackdrop($event)">
+    <div class="dialog" [class.wide]="isVisit()" role="dialog" aria-modal="true" aria-labelledby="enq-title">
+      <div class="inner">
+        <button type="button" class="close" (click)="close()" aria-label="Close">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+            <path d="M5 5l14 14M19 5L5 19" />
+          </svg>
+        </button>
+
+        <h2 id="enq-title">{{ title() }}</h2>
+        <p class="sub">{{ subtitle() }}</p>
+
+        @if (sent()) {
+          <!-- Thank-you view (both forms) -->
+          <div class="done" role="status">
+            <h3>{{ doneTitle() }}</h3>
+            <p>{{ doneText() }}</p>
+            <button type="button" class="otp" (click)="close()">Close</button>
+          </div>
+        } @else if (isVisit()) {
+          <!-- Book a Site Visit form -->
+          <form class="form" (submit)="onSubmit($event)">
+            <div class="field">
+              <label for="visit-name">Full Name *</label>
+              <input
+                #nameInput
+                id="visit-name"
+                type="text"
+                name="name"
+                placeholder="Enter your name"
+                autocomplete="name"
+                required
+              />
+            </div>
+
+            <div class="row2">
+              <div class="field">
+                <label for="visit-phone">Phone *</label>
+                <app-phone-field inputId="visit-phone" />
+              </div>
+              <div class="field">
+                <label for="visit-email">Email</label>
+                <input
+                  id="visit-email"
+                  type="email"
+                  name="email"
+                  placeholder="optional"
+                  autocomplete="email"
+                />
+              </div>
+            </div>
+
+            <div class="row2">
+              <div class="field">
+                <label for="visit-date">Preferred Date *</label>
+                <input id="visit-date" type="date" name="date" [min]="today" required />
+              </div>
+              <div class="field">
+                <label for="visit-time">Time Slot *</label>
+                <select id="visit-time" name="time" required>
+                  <option value="" selected disabled>Pick a time</option>
+                  <option>10:00 AM</option>
+                  <option>12:00 PM</option>
+                  <option>2:00 PM</option>
+                  <option>4:00 PM</option>
+                  <option>6:00 PM</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="row2">
+              <div class="field">
+                <label for="visit-visitors">Visitors</label>
+                <select id="visit-visitors" name="visitors">
+                    <option>1</option>
+                  <option>2</option>
+                  <option>3</option>
+                  <option>4+</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="visit-bhk">BHK Requirement</label>
+                <select id="visit-bhk" name="bhk">
+                    <option>Any</option>
+                  <option>2 BHK</option>
+                  <option>3 BHK</option>
+                  <option>Sky Villa</option>
+                  <option>Garden Villa</option>
+                  <option>Corner Villa</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="loan">
+              <span class="loan-label">Home Loan Required *</span>
+              <div class="radios">
+                <label><input type="radio" name="loan" value="Yes" required /> Yes</label>
+                <label><input type="radio" name="loan" value="No" /> No</label>
+              </div>
+            </div>
+
+            <button type="submit" class="otp">
+              Get OTP
+              <span class="arrow">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M5 12h14M13 6l6 6-6 6" />
+                </svg>
+              </span>
+            </button>
+
+            <p class="note">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 5h11a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2H9l-3 3v-3H4a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2z" />
+                <path d="M20 9a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2h-1v3l-3-3h-5a2 2 0 0 1-1.5-.7" />
+              </svg>
+              We'll send a confirmation by WhatsApp + SMS
+            </p>
+          </form>
+        } @else {
+          <!-- Enquire Now form -->
+          <form class="form" (submit)="onSubmit($event)">
+            <div class="field">
+              <label for="enq-name">Name</label>
+              <input
+                #nameInput
+                id="enq-name"
+                type="text"
+                name="name"
+                placeholder="Enter your name"
+                autocomplete="name"
+                required
+              />
+            </div>
+
+            <div class="field">
+              <label for="enq-email">Email Address</label>
+              <input
+                id="enq-email"
+                type="email"
+                name="email"
+                placeholder="Enter your email address"
+                autocomplete="email"
+              />
+            </div>
+
+            <div class="field">
+              <label for="enq-phone">Phone Number</label>
+              <app-phone-field inputId="enq-phone" />
+            </div>
+
+            <div class="field">
+              <label for="enq-config">Configuration</label>
+              <select id="enq-config" name="configuration">
+                <option>Any</option>
+                <option>2 BHK Apartment</option>
+                <option>3 BHK Apartment</option>
+                <option>Sky Villa (Triplex)</option>
+                <option>Garden Villa (Duplex)</option>
+                <option>Corner Villa</option>
+              </select>
+            </div>
+
+            <div class="loan">
+              <span class="loan-label">Home Loan Required *</span>
+              <div class="radios">
+                <label><input type="radio" name="loan" value="Yes" required /> Yes</label>
+                <label><input type="radio" name="loan" value="No" /> No</label>
+              </div>
+            </div>
+
+            <button type="submit" class="otp">
+              Get OTP
+              <span class="arrow">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M5 12h14M13 6l6 6-6 6" />
+                </svg>
+              </span>
+            </button>
+
+            <p class="note">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M5 4h3.5l2 5-2.5 1.5a11 11 0 0 0 5.5 5.5L15 13.5l5 2V19a2 2 0 0 1-2 2A15 15 0 0 1 3 6a2 2 0 0 1 2-2z" />
+              </svg>
+              Get callback in 24 hours
+            </p>
+          </form>
+        }
+      </div>
+    </div>
+  </div>
+}
