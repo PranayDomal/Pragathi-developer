@@ -7,10 +7,11 @@ import {
   inject,
   signal,
 } from '@angular/core';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-master-plan',
-  imports: [],
+  imports: [RouterLink],
   templateUrl: './master-plan.html',
   styleUrl: './master-plan.css',
 })

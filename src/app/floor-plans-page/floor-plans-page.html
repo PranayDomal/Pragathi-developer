@@ -1,0 +1,103 @@
+<section class="band">
+  <div class="wrap">
+    <h1 class="reveal">Floor Plans</h1>
+    <p class="reveal" style="--delay:.1s">
+      477 units across 3 towers (27 floors each) plus duplex Garden Villas, triplex Sky Villas,
+      and Corner Villas — East and West facing. Pick a unit and download the floor plan, or
+      <a routerLink="/book-site-visit" class="visit-link">book a site visit</a>.
+    </p>
+  </div>
+</section>
+
+<section class="plans">
+  <div class="wrap">
+    @for (g of groups; track g.title) {
+      <div class="group">
+        <div class="group-head reveal">
+          <h2>{{ g.title }}</h2>
+          <span>{{ g.plans.length }} configurations</span>
+        </div>
+
+        <div class="grid">
+          @for (p of g.plans; track p.name; let i = $index) {
+            <article class="card reveal" [style.--delay]="(i % 3) * 0.12 + 's'">
+              <div class="img-box">
+                <img [src]="p.image" [alt]="p.name" />
+              </div>
+              <div class="card-body">
+                <div class="title-row">
+                  <h3>{{ p.name }}</h3>
+                  @if (p.facing) {
+                    <span class="pill">{{ p.facing }}</span>
+                  }
+                </div>
+                <p class="specs">{{ p.specs }}</p>
+                <button type="button" class="dl" (click)="choose(p.name)">
+                  <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="m7 11 5 5 5-5"/><path d="M5 21h14"/></svg>
+                  Download this plan
+                </button>
+              </div>
+            </article>
+          }
+        </div>
+      </div>
+    }
+  </div>
+</section>
+
+<section id="download-floor-plan" class="download">
+  <div class="wrap narrow">
+    <span class="eyebrow reveal">DOWNLOAD FLOOR PLAN</span>
+    <h2 class="reveal" style="--delay:.1s">Get the floor plan you're interested in</h2>
+    <p class="sub reveal" style="--delay:.2s">
+      Pick a unit configuration, share your contact, and we'll send the detailed floor plan PDF
+      straight to your phone within one business day.
+    </p>
+
+    <form #f class="form-card reveal" style="--delay:.3s" (submit)="submit($event, f)">
+      <label class="field">
+        <span>Floor plan you want *</span>
+        <select required (change)="onSelect($event)">
+          <option value="" [selected]="!selected()">— Select a unit —</option>
+          @for (p of allPlans; track p.name) {
+            <option [value]="p.name" [selected]="p.name === selected()">{{ label(p) }}</option>
+          }
+        </select>
+      </label>
+
+      <div class="row">
+        <label class="field">
+          <span>Full name *</span>
+          <input type="text" required />
+        </label>
+        <div class="field">
+          <span>Mobile number *</span>
+          <app-phone-field inputId="fp-phone" [required]="true" />
+        </div>
+      </div>
+
+      <label class="field">
+        <span>Email (optional)</span>
+        <input type="email" placeholder="you@example.com" />
+      </label>
+
+      <div class="field">
+        <span>Home loan required</span>
+        <div class="radios">
+          <label><input type="radio" name="loan" value="Yes" /> Yes</label>
+          <label><input type="radio" name="loan" value="No" /> No</label>
+        </div>
+      </div>
+
+      <button type="submit" class="otp">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="m7 11 5 5 5-5"/><path d="M5 21h14"/></svg>
+        GET OTP
+      </button>
+
+      @if (sent()) {
+        <p class="thanks">Thank you! We'll send your floor plan shortly.</p>
+      }
+      <p class="note">🔒 Your details are safe with us. No spam — just the floor plan you asked for.</p>
+    </form>
+  </div>
+</section>

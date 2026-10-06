@@ -4,6 +4,8 @@ import { LocationPage } from './location-page/location-page';
 import { GalleryPage } from './gallery-page/gallery-page';
 import { SpecificationsPage } from './specifications-page/specifications-page';
 import { PricePage } from './price-page/price-page';
+import { FloorPlansPage } from './floor-plans-page/floor-plans-page';
+
 
 export const routes: Routes = [
   {
@@ -31,6 +33,11 @@ export const routes: Routes = [
     component: PricePage,
     title: 'Price & Payment Plan | Green Woods — Pragathi Developers',
   },
+
+  { 
+    path: 'floor-plans', component: FloorPlansPage, title: 'Floor Plans | Green Woods — Pragathi Developers' 
+  },
+
   // Any unknown address goes back to the home page
   { path: '**', redirectTo: '' },
 ];
