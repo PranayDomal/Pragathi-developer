@@ -4,10 +4,11 @@ import { filter } from 'rxjs';
 import { Header } from './header/header';
 import { Footer } from './footer/footer';
 import { EnquiryModal } from './enquiry-modal/enquiry-modal';
+import { FloatingWidgets } from './floating-widgets/floating-widgets';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, Header, Footer, EnquiryModal],
+  imports: [RouterOutlet, Header, Footer, EnquiryModal, FloatingWidgets],
   templateUrl: './app.html',
   styleUrl: './app.css',
 })
