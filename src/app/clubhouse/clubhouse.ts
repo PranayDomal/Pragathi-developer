@@ -1,8 +1,10 @@
 import { AfterViewInit, Component, ElementRef, OnDestroy, inject } from '@angular/core';
+import { RouterLink } from '@angular/router';
+
 
 @Component({
   selector: 'app-clubhouse',
-  imports: [],
+  imports: [RouterLink],
   templateUrl: './clubhouse.html',
   styleUrl: './clubhouse.css',
 })

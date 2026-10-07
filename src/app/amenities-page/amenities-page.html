@@ -1,0 +1,47 @@
+<section class="band">
+  <div class="wrap">
+    <h1 class="reveal">Amenities</h1>
+    <p class="reveal" style="--delay:.1s">{{ total }} catalogued across {{ categories.length }} categories.</p>
+  </div>
+</section>
+
+@for (c of categories; track c.title) {
+  <section class="cat">
+    <div class="wrap">
+      <h2 class="reveal">{{ c.title }}</h2>
+      <p class="count reveal" style="--delay:.08s">{{ c.items.length }} amenities in this category</p>
+
+      <div class="grid">
+        @for (a of c.items; track a.name; let i = $index) {
+          <div class="cell reveal pop" [style.--delay]="(i % 3) * 0.1 + 's'">
+            <article class="card">
+              <div class="media" [class.empty]="!a.image">
+                @if (a.image) {
+                  <img [src]="a.image" [alt]="a.name" loading="lazy" />
+                }
+                @if (a.featured) {
+                  <span class="badge">Featured</span>
+                }
+              </div>
+              <div class="body">
+                <span class="label">{{ c.title }}</span>
+                <h3>{{ a.name }}</h3>
+              </div>
+            </article>
+          </div>
+        }
+      </div>
+    </div>
+  </section>
+}
+
+<section class="note-section">
+  <div class="note reveal">
+    <p>
+      <strong>{{ total }} of 60+ amenities catalogued.</strong>
+      We are progressively documenting the full list — visit our sales gallery or
+      <button type="button" class="linkbtn" (click)="openEnquiry()">contact us</button>
+      for the complete brochure.
+    </p>
+  </div>
+</section>

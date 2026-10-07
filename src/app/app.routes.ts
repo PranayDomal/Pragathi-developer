@@ -6,6 +6,7 @@ import { SpecificationsPage } from './specifications-page/specifications-page';
 import { PricePage } from './price-page/price-page';
 import { FloorPlansPage } from './floor-plans-page/floor-plans-page';
 import { ContactPage } from './contact-page/contact-page';
+import { AmenitiesPage } from './amenities-page/amenities-page';
 
 
 export const routes: Routes = [
@@ -42,7 +43,9 @@ export const routes: Routes = [
   { path: 'contact', component: ContactPage, title: 'Contact Us | Green Woods — Pragathi Developers' 
 
   },
-
+  { 
+    path: 'amenities', component: AmenitiesPage, title: 'Amenities — 60+ Modern Lifestyle Amenities | Green Woods' 
+  },
   // Any unknown address goes back to the home page
   { path: '**', redirectTo: '' },
 ];
