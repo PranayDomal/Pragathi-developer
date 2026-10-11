@@ -1,10 +1,7 @@
 import { Component, ElementRef, HostListener, OnDestroy, ViewChild, effect, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
-import { ADMIN_FLAG, AdminLoginState } from './admin-login-state';
-
-// DEV MODE ONLY: checked in the browser, not on the server
-const DEV_ID = 'admin';
-const DEV_PASSWORD = 'admin';
+import { AdminLoginState } from './admin-login-state';
+import { AdminAuthService } from '../services/admin-auth.service';
 
 @Component({
   selector: 'app-admin-login',
@@ -15,6 +12,9 @@ const DEV_PASSWORD = 'admin';
 export class AdminLogin implements OnDestroy {
   state = inject(AdminLoginState);
   private router = inject(Router);
+
+  private auth = inject(AdminAuthService);
+  busy = signal(false);
 
   error = signal('');
 
@@ -48,18 +48,28 @@ export class AdminLogin implements OnDestroy {
     if (this.state.isOpen()) this.close();
   }
 
-  onSubmit(event: Event) {
-    event.preventDefault();
-    const data = new FormData(event.target as HTMLFormElement);
-    const id = String(data.get('id') ?? '').trim();
-    const password = String(data.get('password') ?? '');
+     async onSubmit(event: Event) {
+      event.preventDefault();
+      if (this.busy()) return;
 
-    if (id === DEV_ID && password === DEV_PASSWORD) {
-      sessionStorage.setItem(ADMIN_FLAG, '1');
-      this.close();
-      this.router.navigateByUrl('/admin');
-    } else {
-      this.error.set('Wrong ID or password.');
+      const data = new FormData(event.target as HTMLFormElement);
+      const id = String(data.get('id') ?? '').trim();
+      const password = String(data.get('password') ?? '');
+
+      this.busy.set(true);
+      this.error.set('');
+      const result = await this.auth.login(id, password);
+      this.busy.set(false);
+
+      if (result === 'ok') {
+        this.close();
+        this.router.navigateByUrl('/admin');
+      } else if (result === 'wrong') {
+        this.error.set('Wrong ID or password.');
+      } else if (result === 'busy') {
+        this.error.set('Too many attempts. Please wait a minute and try again.');
+      } else {
+        this.error.set("Can't reach the server. It may be waking up, so please try again in a moment.");
+      }
     }
-  }
 }

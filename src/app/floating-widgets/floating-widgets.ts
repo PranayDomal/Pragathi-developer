@@ -2,7 +2,6 @@ import { Component, ElementRef, HostListener, ViewChild, computed, inject, signa
 import { ModalState } from '../enquiry-modal/modal-state';
 import { ApiService } from '../services/api.service';
 import { AdminLoginState } from '../admin-login/admin-login-state';
-import { environment } from '../../environments/environment';
 
 interface Msg {
   from: 'bot' | 'user';
@@ -20,7 +19,7 @@ export class FloatingWidgets {
   private modal = inject(ModalState);
   private api = inject(ApiService);
   private adminLogin = inject(AdminLoginState);
-  readonly showAdmin = !environment.production;
+  readonly showAdmin = true;
 
   private answers = { name: '', config: '', budget: '', timeline: '', phone: '', time: '' };
 

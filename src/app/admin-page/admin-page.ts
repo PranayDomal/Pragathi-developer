@@ -2,7 +2,7 @@ import { Component, computed, inject, signal } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { forkJoin } from 'rxjs';
-import { ADMIN_FLAG } from '../admin-login/admin-login-state';
+import { AdminAuthService } from '../services/admin-auth.service';
 import { AdminService, TableName } from '../services/admin.service';
 
 type Row = Record<string, any>;
@@ -75,6 +75,8 @@ export class AdminPage {
   private router = inject(Router);
   private admin = inject(AdminService);
 
+  private auth = inject(AdminAuthService);
+
   tables = TABLES;
   active = signal<TableName>('leads');
   data = signal<Record<TableName, Row[]>>({ leads: [], activities: [], visits: [], configurations: [] });
@@ -92,7 +94,7 @@ export class AdminPage {
 
   constructor() {
     // Opened the URL directly without signing in? Send them home.
-    if (sessionStorage.getItem(ADMIN_FLAG) !== '1') {
+    if (!this.auth.isLoggedIn()) {
       this.router.navigateByUrl('/');
       return;
     }
@@ -100,7 +102,7 @@ export class AdminPage {
   }
 
   signOut() {
-    sessionStorage.removeItem(ADMIN_FLAG);
+    this.auth.logout();
     this.router.navigateByUrl('/');
   }
 
