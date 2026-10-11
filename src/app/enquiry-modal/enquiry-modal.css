@@ -128,6 +128,7 @@ label,
 
 input[type='text'],
 input[type='email'],
+input[type='password'],
 input[type='date'],
 select {
   display: block;
@@ -150,6 +151,7 @@ input::placeholder {
 /* Focused field: white background and green border */
 input[type='text']:focus,
 input[type='email']:focus,
+input[type='password']:focus,
 input[type='date']:focus,
 select:focus {
   outline: none;

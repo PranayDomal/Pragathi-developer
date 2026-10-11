@@ -1,6 +1,8 @@
-import { AfterViewInit, Component, ElementRef, OnDestroy, inject, signal } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnDestroy, ViewChild, inject, signal } from '@angular/core';
+import { HttpErrorResponse } from '@angular/common/http';
 import { RouterLink } from '@angular/router';
 import { PhoneField } from '../phone-field/phone-field';
+import { ApiService } from '../services/api.service';
 
 interface Plan {
   name: string;
@@ -28,6 +30,14 @@ export class FloorPlansPage implements AfterViewInit, OnDestroy {
 
   selected = signal('');
   sent = signal(false);
+
+  private api = inject(ApiService);
+
+  sending = signal(false);
+  already = signal(false);
+  error = signal('');
+
+  @ViewChild('fpPhone') fpPhone?: PhoneField;
 
   groups: Group[] = [
     {
@@ -84,12 +94,71 @@ export class FloorPlansPage implements AfterViewInit, OnDestroy {
 
   submit(e: Event, form: HTMLFormElement) {
     e.preventDefault();
-    this.sent.set(true);
-    form.reset();
-    this.selected.set('');
-    setTimeout(() => this.sent.set(false), 4000);
+    if (this.sending()) return;
+
+    const data = new FormData(form);
+    const plan = String(data.get('plan') ?? '');
+    const loan = data.get('loan');
+
+    this.error.set('');
+    this.sending.set(true);
+
+    this.api
+      .submit({
+        name: String(data.get('name') ?? '').trim(),
+        phone: this.fpPhone?.fullNumber() ?? '',
+        email: String(data.get('email') ?? '').trim() || undefined,
+        type: 'FloorPlanDownload',
+        configuration: this.configurationFor(plan),
+        homeLoan: loan === null ? undefined : loan === 'Yes',
+        detail: plan,
+      })
+      .subscribe({
+        next: (res) => {
+          this.already.set(res.alreadyReceived);
+          this.sending.set(false);
+          this.download(plan);
+          this.sent.set(true);
+          form.reset();
+          this.selected.set('');
+          setTimeout(() => this.sent.set(false), 4000);
+        },
+        error: (err: HttpErrorResponse) => {
+          this.sending.set(false);
+          this.error.set(this.errorText(err));
+        },
+      });
   }
 
+  // Maps a plan name to the configuration names stored in the database
+  private configurationFor(plan: string): string {
+    if (plan.includes('2BHK')) return '2 BHK Apartment';
+    if (plan.includes('3BHK')) return '3 BHK Apartment';
+    if (plan.startsWith('SKY-VILLA')) return 'Sky Villa (Triplex)';
+    if (plan.startsWith('GARDEN-VILLA')) return 'Garden Villa (Duplex)';
+    if (plan.startsWith('CORNER-VILLA')) return 'Corner Villa';
+    return 'Any';
+  }
+
+  private download(planName: string) {
+    const plan = this.allPlans.find((p) => p.name === planName);
+    if (!plan) return;
+    const ext = plan.image.split('.').pop() ?? 'png';
+    const a = document.createElement('a');
+    a.href = plan.image;
+    a.download = `${plan.name}.${ext}`;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+  }
+
+  private errorText(err: HttpErrorResponse): string {
+    if (err.status === 0) return "Can't reach the server. Please try again.";
+    if (err.status === 429) return 'Too many attempts. Please wait a minute.';
+    const errors = err.error?.errors;
+    if (errors) return String(Object.values(errors).flat()[0]);
+    return 'Something went wrong. Please try again.';
+  }
   ngAfterViewInit() {
     this.items = Array.from(this.host.nativeElement.querySelectorAll<HTMLElement>('.reveal'));
     window.addEventListener('scroll', this.updateReveal, { passive: true });

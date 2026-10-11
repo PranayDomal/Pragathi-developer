@@ -7,9 +7,15 @@ import { PricePage } from './price-page/price-page';
 import { FloorPlansPage } from './floor-plans-page/floor-plans-page';
 import { ContactPage } from './contact-page/contact-page';
 import { AmenitiesPage } from './amenities-page/amenities-page';
+import { AdminPage } from './admin-page/admin-page';
 
 
 export const routes: Routes = [
+
+    { 
+      path: 'admin', component: AdminPage, title: 'Admin | Green Woods' 
+    },
+
   {
     path: '',
     component: Home,

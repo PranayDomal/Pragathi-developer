@@ -43,22 +43,22 @@
       <div class="row">
         <label class="field">
           <span>Full name *</span>
-          <input type="text" required />
+          <input type="text" name="name" required />
         </label>
         <div class="field">
           <span>Phone *</span>
-          <app-phone-field inputId="contact-phone" [required]="true" />
+          <app-phone-field #contactPhone inputId="contact-phone" [required]="true" />
         </div>
       </div>
 
       <div class="row">
         <label class="field">
           <span>Email</span>
-          <input type="email" />
+          <input type="email" name="email" />
         </label>
         <label class="field">
           <span>Configuration of interest *</span>
-          <select required class="short">
+          <select required class="short" name="configuration">
             @for (c of configs; track c) {
               <option [value]="c">{{ c }}</option>
             }
@@ -68,7 +68,7 @@
 
       <label class="field message">
         <span>Message</span>
-        <textarea rows="3"></textarea>
+        <textarea rows="3" name="message"></textarea>
       </label>
 
       <fieldset class="loan">
@@ -77,11 +77,19 @@
         <label><input type="radio" name="loan" value="No" /> No</label>
       </fieldset>
 
-      <button type="submit" class="otp">Get OTP</button>
+      <button type="submit" class="otp" [disabled]="sending()">
+        {{ sending() ? 'Sending…' : 'Send Enquiry' }}
+        </button>
 
-      @if (sent()) {
-        <p class="thanks">Thank you! We'll get back to you within one business day.</p>
-      }
+        @if (error()) {
+        <p class="thanks" role="alert" style="color:#b42318">{{ error() }}</p>
+        }
+
+        @if (sent()) {
+        <p class="thanks">
+            {{ already() ? 'We already received your message. We\'ll get back to you shortly.' : 'Thank you! We\'ll get back to you within one business day.' }}
+        </p>
+        }
     </form>
   </div>
 </section>

@@ -16,4 +16,9 @@ export class Header {
     event.preventDefault();
     this.modal.show();
   }
+
+  openBrochure(event: Event) {
+    event.preventDefault();
+    this.modal.showBrochure();
+  }
 }

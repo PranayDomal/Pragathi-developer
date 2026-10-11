@@ -1,6 +1,8 @@
-import { AfterViewInit, Component, ElementRef, OnDestroy, inject, signal } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnDestroy, ViewChild, inject, signal } from '@angular/core';
+import { HttpErrorResponse } from '@angular/common/http';
 import { PhoneField } from '../phone-field/phone-field';
 import { ModalState } from '../enquiry-modal/modal-state';
+import { ApiService } from '../services/api.service';
 
 @Component({
   selector: 'app-enquiry',
@@ -9,8 +11,15 @@ import { ModalState } from '../enquiry-modal/modal-state';
   styleUrl: './enquiry.css',
 })
 export class Enquiry implements AfterViewInit, OnDestroy {
-  // Shows the thank-you message after the form is submitted
+
+  private api = inject(ApiService);
+
   sent = signal(false);
+  sending = signal(false);
+  already = signal(false);
+  error = signal('');
+
+@ViewChild('homePhone') homePhone?: PhoneField;
 
   private modal = inject(ModalState);
 
@@ -20,12 +29,56 @@ export class Enquiry implements AfterViewInit, OnDestroy {
     this.modal.showVisit();
   }
 
-  // The browser checks the required fields before this runs.
-  // There is no backend yet, so we only show a message and clear the form.
   onSubmit(event: Event) {
     event.preventDefault();
-    this.sent.set(true);
-    (event.target as HTMLFormElement).reset();
+    if (this.sending()) return;
+
+    const form = event.target as HTMLFormElement;
+    const data = new FormData(form);
+
+    // Budget and best time have no database column, so they go in front of the message
+    const parts: string[] = [];
+    const budget = String(data.get('budget') ?? '');
+    const time = String(data.get('time') ?? '');
+    const note = String(data.get('message') ?? '').trim();
+    if (budget && budget !== 'Not Sure') parts.push(`Budget: ${budget}`);
+    if (time && time !== 'Anytime') parts.push(`Best time to call: ${time}`);
+    if (note) parts.push(note);
+
+    this.error.set('');
+    this.sending.set(true);
+
+    this.api
+      .submit({
+        name: String(data.get('name') ?? '').trim(),
+        phone: this.homePhone?.fullNumber() ?? '',
+        email: String(data.get('email') ?? '').trim() || undefined,
+        type: 'Enquiry',
+        configuration: String(data.get('interest') ?? 'Any'),
+        homeLoan: data.get('loan') === 'Yes',
+        message: parts.join('\n') || undefined,
+      })
+      .subscribe({
+        next: (res) => {
+          this.already.set(res.alreadyReceived);
+          this.sending.set(false);
+          this.sent.set(true);
+          form.reset();
+          setTimeout(() => this.sent.set(false), 4000);
+        },
+        error: (err: HttpErrorResponse) => {
+          this.sending.set(false);
+          this.error.set(this.errorText(err));
+        },
+      });
+  }
+
+  private errorText(err: HttpErrorResponse): string {
+    if (err.status === 0) return "Can't reach the server. Please try again.";
+    if (err.status === 429) return 'Too many attempts. Please wait a minute.';
+    const errors = err.error?.errors;
+    if (errors) return String(Object.values(errors).flat()[0]);
+    return 'Something went wrong. Please try again.';
   }
 
   // ---------- Scroll animation ----------

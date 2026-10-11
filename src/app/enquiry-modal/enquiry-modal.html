@@ -12,13 +12,17 @@
         <p class="sub">{{ subtitle() }}</p>
 
         @if (sent()) {
-          <!-- Thank-you view (both forms) -->
           <div class="done" role="status">
             <h3>{{ doneTitle() }}</h3>
-            <p>{{ doneText() }}</p>
+            <p>{{ already() && !isBrochure() ? 'We already have your details. Our team will contact you soon.' : doneText() }}</p>
+            @if (isBrochure()) {
+              <p><a href="assets/brochure/Green-Woods-Brochure.pdf" download>Didn't start? Download it again</a></p>
+            }
             <button type="button" class="otp" (click)="close()">Close</button>
           </div>
-        } @else if (isVisit()) {
+        } 
+        
+        @else if (isVisit()) {
           <!-- Book a Site Visit form -->
           <form class="form" (submit)="onSubmit($event)">
             <div class="field">
@@ -37,7 +41,7 @@
             <div class="row2">
               <div class="field">
                 <label for="visit-phone">Phone *</label>
-                <app-phone-field inputId="visit-phone" />
+                <app-phone-field #visitPhone inputId="visit-phone" />
               </div>
               <div class="field">
                 <label for="visit-email">Email</label>
@@ -82,12 +86,12 @@
               <div class="field">
                 <label for="visit-bhk">BHK Requirement</label>
                 <select id="visit-bhk" name="bhk">
-                    <option>Any</option>
-                  <option>2 BHK</option>
-                  <option>3 BHK</option>
-                  <option>Sky Villa</option>
-                  <option>Garden Villa</option>
-                  <option>Corner Villa</option>
+                       <option>Any</option>
+                        <option>2 BHK Apartment</option>
+                        <option>3 BHK Apartment</option>
+                        <option>Sky Villa (Triplex)</option>
+                        <option>Garden Villa (Duplex)</option>
+                        <option>Corner Villa</option>
                 </select>
               </div>
             </div>
@@ -100,14 +104,18 @@
               </div>
             </div>
 
-            <button type="submit" class="otp">
-              Get OTP
+            <button type="submit" class="otp" [disabled]="sending()">
+              {{ sending() ? 'Sending…' : 'Submit' }}
               <span class="arrow">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                   <path d="M5 12h14M13 6l6 6-6 6" />
                 </svg>
               </span>
             </button>
+
+            @if (error()) {
+              <p class="note" role="alert" style="color:#b42318">{{ error() }}</p>
+            }
 
             <p class="note">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
@@ -146,7 +154,7 @@
 
             <div class="field">
               <label for="enq-phone">Phone Number</label>
-              <app-phone-field inputId="enq-phone" />
+              <app-phone-field #enqPhone inputId="enq-phone" />
             </div>
 
             <div class="field">
@@ -169,14 +177,18 @@
               </div>
             </div>
 
-            <button type="submit" class="otp">
-              Get OTP
-              <span class="arrow">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M5 12h14M13 6l6 6-6 6" />
-                </svg>
-              </span>
-            </button>
+              <button type="submit" class="otp" [disabled]="sending()">
+                {{ sending() ? 'Sending…' : 'Submit' }}
+                <span class="arrow">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M5 12h14M13 6l6 6-6 6" />
+                  </svg>
+                </span>
+              </button>
+
+              @if (error()) {
+                <p class="note" role="alert" style="color:#b42318">{{ error() }}</p>
+              }
 
             <p class="note">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">

@@ -1,0 +1,56 @@
+@if (state.isOpen()) {
+  <div class="backdrop" (click)="onBackdrop($event)">
+    <div class="dialog" role="dialog" aria-modal="true" aria-labelledby="admin-title">
+      <div class="inner">
+        <button type="button" class="close" (click)="close()" aria-label="Close">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+            <path d="M5 5l14 14M19 5L5 19" />
+          </svg>
+        </button>
+
+        <h2 id="admin-title">Admin Login</h2>
+        <p class="sub">Dev mode — sign in to view the database.</p>
+
+        <form class="form" (submit)="onSubmit($event)">
+          <div class="field">
+            <label for="admin-id">ID</label>
+            <input
+              #idInput
+              id="admin-id"
+              type="text"
+              name="id"
+              placeholder="Enter your ID"
+              autocomplete="username"
+              required
+            />
+          </div>
+
+          <div class="field">
+            <label for="admin-password">Password</label>
+            <input
+              id="admin-password"
+              type="password"
+              name="password"
+              placeholder="Enter your password"
+              autocomplete="current-password"
+              required
+            />
+          </div>
+
+          <button type="submit" class="otp">
+            Sign In
+            <span class="arrow">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M5 12h14M13 6l6 6-6 6" />
+              </svg>
+            </span>
+          </button>
+
+          @if (error()) {
+            <p class="note" role="alert" style="color:#b42318">{{ error() }}</p>
+          }
+        </form>
+      </div>
+    </div>
+  </div>
+}

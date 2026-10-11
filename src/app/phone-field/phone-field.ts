@@ -45,6 +45,14 @@ export class PhoneField {
 
   @ViewChild('searchBox') searchBox?: ElementRef<HTMLInputElement>;
 
+  @ViewChild('numberBox') numberBox?: ElementRef<HTMLInputElement>;
+
+// e.g. "+91" + "98765 43210" -> "+919876543210"
+fullNumber(): string {
+  const digits = (this.numberBox?.nativeElement.value ?? '').replace(/\D/g, '').replace(/^0+/, '');
+  return digits ? this.selected().dial + digits : '';
+}
+
   flagUrl(iso: string) {
     return `https://flagcdn.com/w40/${iso}.png`;
   }

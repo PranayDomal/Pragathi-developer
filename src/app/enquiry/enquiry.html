@@ -14,7 +14,7 @@
 
         <div class="field">
           <label for="mobile">Mobile Number *</label>
-          <app-phone-field inputId="mobile" />
+          <app-phone-field #homePhone inputId="mobile" />
         </div>
 
         <div class="field">
@@ -69,16 +69,20 @@
         </div>
 
         <div class="full">
-          <button type="submit" class="otp">Get OTP</button>
+          <button type="submit" class="otp" [disabled]="sending()">
+            {{ sending() ? 'Sending…' : 'Submit' }}
+          </button>
         </div>
+
+        @if (error()) {
+          <p class="sent full" role="alert" style="color:#b42318">{{ error() }}</p>
+        }
 
         @if (sent()) {
           <p class="sent full" role="status">
-            Thank you! Our sales team will contact you within 24 hours.
+            {{ already() ? 'We already have your details. Our sales team will contact you soon.' : 'Thank you! Our sales team will contact you within 24 hours.' }}
           </p>
         }
-
-        <p class="safe full">🔒 Your details are safe with us. No spam, ever.</p>
       </form>
     </div>
 

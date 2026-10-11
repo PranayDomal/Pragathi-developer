@@ -5,10 +5,11 @@ import { Header } from './header/header';
 import { Footer } from './footer/footer';
 import { EnquiryModal } from './enquiry-modal/enquiry-modal';
 import { FloatingWidgets } from './floating-widgets/floating-widgets';
+import { AdminLogin } from './admin-login/admin-login';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, Header, Footer, EnquiryModal, FloatingWidgets],
+  imports: [RouterOutlet, Header, Footer, EnquiryModal, FloatingWidgets, AdminLogin],
   templateUrl: './app.html',
   styleUrl: './app.css',
 })

@@ -57,7 +57,7 @@
     <form #f class="form-card reveal" style="--delay:.3s" (submit)="submit($event, f)">
       <label class="field">
         <span>Floor plan you want *</span>
-        <select required (change)="onSelect($event)">
+        <select name="plan" required (change)="onSelect($event)">
           <option value="" [selected]="!selected()">— Select a unit —</option>
           @for (p of allPlans; track p.name) {
             <option [value]="p.name" [selected]="p.name === selected()">{{ label(p) }}</option>
@@ -68,17 +68,17 @@
       <div class="row">
         <label class="field">
           <span>Full name *</span>
-          <input type="text" required />
+          <input type="text" name="name" required />
         </label>
         <div class="field">
           <span>Mobile number *</span>
-          <app-phone-field inputId="fp-phone" [required]="true" />
+          <app-phone-field #fpPhone inputId="fp-phone" [required]="true" />
         </div>
       </div>
 
       <label class="field">
         <span>Email (optional)</span>
-        <input type="email" placeholder="you@example.com" />
+        <input type="email" name="email" placeholder="you@example.com" />
       </label>
 
       <div class="field">
@@ -89,15 +89,18 @@
         </div>
       </div>
 
-      <button type="submit" class="otp">
+      <button type="submit" class="otp" [disabled]="sending()">
         <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="m7 11 5 5 5-5"/><path d="M5 21h14"/></svg>
-        GET OTP
-      </button>
+        {{ sending() ? 'SENDING…' : 'GET FLOOR PLAN' }}
+        </button>
 
-      @if (sent()) {
-        <p class="thanks">Thank you! We'll send your floor plan shortly.</p>
-      }
-      <p class="note">🔒 Your details are safe with us. No spam — just the floor plan you asked for.</p>
+        @if (error()) {
+        <p class="thanks" role="alert" style="color:#b42318">{{ error() }}</p>
+        }
+
+        @if (sent()) {
+            <p class="thanks">Thank you! Your floor plan download has started.</p>
+        }
     </form>
   </div>
 </section>

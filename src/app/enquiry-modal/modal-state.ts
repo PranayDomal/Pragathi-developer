@@ -1,6 +1,6 @@
 import { Injectable, computed, signal } from '@angular/core';
 
-export type ModalMode = 'enquiry' | 'visit';
+export type ModalMode = 'enquiry' | 'visit' | 'brochure';
 
 // One shared "which pop-up is open?" switch for the whole site
 @Injectable({ providedIn: 'root' })
@@ -17,6 +17,11 @@ export class ModalState {
   // Book a Site Visit pop-up
   showVisit() {
     this.mode.set('visit');
+  }
+
+  // Download Brochure pop-up (header Brochure button and the floating download button)
+  showBrochure() {
+    this.mode.set('brochure');
   }
 
   hide() {
