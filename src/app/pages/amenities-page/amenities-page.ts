@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, ElementRef, OnDestroy, inject } from '@angular/core';
-import { ModalState } from '../enquiry-modal/modal-state';
+import { ModalState } from '../../shared/enquiry-modal/modal-state';
 
 interface Amenity {
   name: string;

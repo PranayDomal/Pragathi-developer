@@ -1,14 +1,14 @@
 import { Routes } from '@angular/router';
-import { Home } from './home/home';
-import { LocationPage } from './location-page/location-page';
-import { GalleryPage } from './gallery-page/gallery-page';
-import { SpecificationsPage } from './specifications-page/specifications-page';
-import { PricePage } from './price-page/price-page';
-import { FloorPlansPage } from './floor-plans-page/floor-plans-page';
-import { ContactPage } from './contact-page/contact-page';
-import { AmenitiesPage } from './amenities-page/amenities-page';
-import { AdminPage } from './admin-page/admin-page';
-import { adminGuard } from './services/admin-http';
+import { Home } from './pages/home/home';
+import { LocationPage } from './pages/location-page/location-page';
+import { GalleryPage } from './pages/gallery-page/gallery-page';
+import { SpecificationsPage } from './pages/specifications-page/specifications-page';
+import { PricePage } from './pages/price-page/price-page';
+import { FloorPlansPage } from './pages/floor-plans-page/floor-plans-page';
+import { ContactPage } from './pages/contact-page/contact-page';
+import { AmenitiesPage } from './pages/amenities-page/amenities-page';
+import { AdminPage } from './admin/admin-page/admin-page';
+import { adminGuard } from './core/services/admin-http';
 
 
 export const routes: Routes = [

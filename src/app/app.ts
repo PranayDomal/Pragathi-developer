@@ -1,11 +1,11 @@
 import { Component, inject } from '@angular/core';
 import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { filter } from 'rxjs';
-import { Header } from './header/header';
-import { Footer } from './footer/footer';
-import { EnquiryModal } from './enquiry-modal/enquiry-modal';
-import { FloatingWidgets } from './floating-widgets/floating-widgets';
-import { AdminLogin } from './admin-login/admin-login';
+import { Header } from './layout/header/header';
+import { Footer } from './layout/footer/footer';
+import { EnquiryModal } from './shared/enquiry-modal/enquiry-modal';
+import { FloatingWidgets } from './layout/floating-widgets/floating-widgets';
+import { AdminLogin } from './admin/admin-login/admin-login';
 
 @Component({
   selector: 'app-root',

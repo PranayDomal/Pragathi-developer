@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
-import { ModalState } from '../enquiry-modal/modal-state';
+import { ModalState } from '../../shared/enquiry-modal/modal-state';
 
 @Component({
   selector: 'app-header',

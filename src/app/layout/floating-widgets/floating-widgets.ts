@@ -1,7 +1,7 @@
 import { Component, ElementRef, HostListener, ViewChild, computed, inject, signal } from '@angular/core';
-import { ModalState } from '../enquiry-modal/modal-state';
-import { ApiService } from '../services/api.service';
-import { AdminLoginState } from '../admin-login/admin-login-state';
+import { ModalState } from '../../shared/enquiry-modal/modal-state';
+import { ApiService } from '../../core/services/api.service';
+import { AdminLoginState } from '../../admin/admin-login/admin-login-state';
 
 interface Msg {
   from: 'bot' | 'user';

@@ -2,8 +2,8 @@ import { Component, computed, inject, signal } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { forkJoin } from 'rxjs';
-import { AdminAuthService } from '../services/admin-auth.service';
-import { AdminService, TableName } from '../services/admin.service';
+import { AdminAuthService } from '../../core/services/admin-auth.service';
+import { AdminService, TableName } from '../../core/services/admin.service';
 
 type Row = Record<string, any>;
 

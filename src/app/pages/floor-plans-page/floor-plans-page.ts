@@ -1,8 +1,8 @@
 import { AfterViewInit, Component, ElementRef, OnDestroy, ViewChild, inject, signal } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { RouterLink } from '@angular/router';
-import { PhoneField } from '../phone-field/phone-field';
-import { ApiService } from '../services/api.service';
+import { PhoneField } from '../../shared/phone-field/phone-field';
+import { ApiService } from '../../core/services/api.service';
 
 interface Plan {
   name: string;

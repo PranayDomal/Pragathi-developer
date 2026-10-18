@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, ElementRef, OnDestroy, ViewChild, inject, signal } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
-import { PhoneField } from '../phone-field/phone-field';
-import { ApiService } from '../services/api.service';
+import { PhoneField } from '../../shared/phone-field/phone-field';
+import { ApiService } from '../../core/services/api.service';
 
 @Component({
   selector: 'app-contact-page',

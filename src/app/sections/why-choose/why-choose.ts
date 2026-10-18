@@ -7,7 +7,7 @@ import {
   inject,
   signal,
 } from '@angular/core';
-import { ModalState } from '../enquiry-modal/modal-state';
+import { ModalState } from '../../shared/enquiry-modal/modal-state';
 
 @Component({
   selector: 'app-why-choose',

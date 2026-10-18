@@ -1,8 +1,8 @@
 import { AfterViewInit, Component, ElementRef, OnDestroy, ViewChild, inject, signal } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
-import { PhoneField } from '../phone-field/phone-field';
-import { ModalState } from '../enquiry-modal/modal-state';
-import { ApiService } from '../services/api.service';
+import { PhoneField } from '../../shared/phone-field/phone-field';
+import { ModalState } from '../../shared/enquiry-modal/modal-state';
+import { ApiService } from '../../core/services/api.service';
 
 @Component({
   selector: 'app-enquiry',

@@ -12,7 +12,7 @@ import {
 import { ModalState } from './modal-state';
 import { PhoneField } from '../phone-field/phone-field';
 import { HttpErrorResponse } from '@angular/common/http';
-import { ApiService, SubmitRequest } from '../services/api.service';
+import { ApiService, SubmitRequest } from '../../core/services/api.service';
 
 
 @Component({

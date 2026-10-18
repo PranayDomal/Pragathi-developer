@@ -1,13 +1,13 @@
 import { Component, ElementRef, HostListener, OnDestroy, ViewChild, effect, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { AdminLoginState } from './admin-login-state';
-import { AdminAuthService } from '../services/admin-auth.service';
+import { AdminAuthService } from '../../core/services/admin-auth.service';
 
 @Component({
   selector: 'app-admin-login',
   imports: [],
   templateUrl: './admin-login.html',
-  styleUrl: '../enquiry-modal/enquiry-modal.css', // same look as Enquire Now
+  styleUrl: '../../shared/enquiry-modal/enquiry-modal.css', // same look as Enquire Now
 })
 export class AdminLogin implements OnDestroy {
   state = inject(AdminLoginState);

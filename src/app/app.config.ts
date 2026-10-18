@@ -2,7 +2,7 @@ import { ApplicationConfig, provideBrowserGlobalErrorListeners } from '@angular/
 import { provideRouter, withInMemoryScrolling, withRouterConfig } from '@angular/router';
 import { provideHttpClient } from '@angular/common/http';
    import { withInterceptors } from '@angular/common/http';
-   import { adminAuthInterceptor } from './services/admin-http';
+   import { adminAuthInterceptor } from './core/services/admin-http';
 
 import { routes } from './app.routes';
 
