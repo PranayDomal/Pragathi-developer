@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 import { forkJoin } from 'rxjs';
 import { AdminAuthService } from '../../core/services/admin-auth.service';
 import { AdminService, TableName } from '../../core/services/admin.service';
+import { AdminUser, UsersService, UserRole } from '../../core/services/users.service';
+import { SIGN_OUT_WARNING } from '../../core/services/admin-http';
 
 type Row = Record<string, any>;
 
@@ -77,6 +79,23 @@ export class AdminPage {
 
   private auth = inject(AdminAuthService);
 
+    private usersApi = inject(UsersService);
+    isSuperuser = this.auth.isSuperuser();
+    showUsers = signal(false);
+    users = signal<AdminUser[]>([]);
+    showAdd = signal(false);
+
+    search = signal('');
+
+  onSearch(event: Event) {
+    this.search.set((event.target as HTMLInputElement).value);
+  }
+
+    // Viewer: false. Editor and Superuser: true.
+    canEdit = this.auth.canEdit();
+    who = this.auth.name();
+    role = this.auth.role();
+
   tables = TABLES;
   active = signal<TableName>('leads');
   data = signal<Record<TableName, Row[]>>({ leads: [], activities: [], visits: [], configurations: [] });
@@ -89,7 +108,24 @@ export class AdminPage {
   draft: Row = {};
 
   current = computed(() => TABLES.find((t) => t.key === this.active())!);
-  rows = computed(() => this.data()[this.active()]);
+    rows = computed(() => {
+    const all = this.data()[this.active()];
+    const q = this.search().trim().toLowerCase();
+    if (!q) return all;
+    const cols = this.current().cols;
+    return all.filter((row) => cols.some((c) => this.show(row, c).toLowerCase().includes(q)));
+  });
+
+  filteredUsers = computed(() => {
+    const all = this.users();
+    const q = this.search().trim().toLowerCase();
+    if (!q) return all;
+    return all.filter((u) =>
+      [String(u.id), u.loginId, u.name, u.role, u.isActive ? 'yes' : 'no'].some((v) =>
+        v.toLowerCase().includes(q),
+      ),
+    );
+  });
   rooms = computed(() => this.data().configurations.map((c) => String(c['name'])));
 
   constructor() {
@@ -101,12 +137,135 @@ export class AdminPage {
     this.loadAll();
   }
 
-  signOut() {
+    signOut() {
+    if (!confirm(SIGN_OUT_WARNING)) return;
     this.auth.logout();
     this.router.navigateByUrl('/');
   }
 
+    openUsers() {
+    this.showUsers.set(true);
+    this.editingId.set(null);
+    this.error.set('');
+    this.info.set('');
+    this.loadUsers();
+    this.search.set('');
+  }
+
+  loadUsers() {
+    this.loading.set(true);
+    this.usersApi.list().subscribe({
+      next: (u) => {
+        this.users.set(u);
+        this.loading.set(false);
+      },
+      error: (err: HttpErrorResponse) => {
+        this.loading.set(false);
+        this.error.set(this.errorText(err));
+      },
+    });
+  }
+
+
+    toggleAdd() {
+    this.showAdd.update((v) => !v);
+    this.error.set('');
+    this.info.set('');
+  }
+
+  createUser(event: Event) {
+    event.preventDefault();
+    const d = new FormData(event.target as HTMLFormElement);
+    const body = {
+      loginId: String(d.get('loginId') ?? '').trim(),
+      name: String(d.get('name') ?? '').trim(),
+      password: String(d.get('password') ?? ''),
+      role: String(d.get('role') ?? 'Viewer') as UserRole,
+    };
+    this.saving.set(true);
+    this.error.set('');
+    this.usersApi.create(body).subscribe({
+      next: () => {
+        this.saving.set(false);
+        this.showAdd.set(false);
+        this.info.set('User added.');
+        this.loadUsers();
+      },
+      error: (err: HttpErrorResponse) => {
+        this.saving.set(false);
+        this.error.set(this.userErrorText(err));
+      },
+    });
+  }
+
+
+    changeRole(u: AdminUser, event: Event) {
+    const role = (event.target as HTMLSelectElement).value as UserRole;
+    this.updateUser(u, { role }, `${u.loginId} is now ${role}.`);
+  }
+
+  toggleActive(u: AdminUser) {
+    this.updateUser(
+      u,
+      { isActive: !u.isActive },
+      u.isActive ? `${u.loginId} switched off.` : `${u.loginId} switched on.`,
+    );
+  }
+
+  resetPassword(u: AdminUser) {
+    const pw = prompt(`New password for ${u.loginId} (at least 8 characters):`);
+    if (pw === null) return; // pressed Cancel
+    if (pw.length < 8) {
+      this.error.set('Password must be at least 8 characters.');
+      return;
+    }
+    this.updateUser(u, { password: pw }, `Password changed for ${u.loginId}.`);
+  }
+
+  removeUser(u: AdminUser) {
+    if (!confirm(`Delete user "${u.loginId}"? This cannot be undone.`)) return;
+    this.error.set('');
+    this.info.set('');
+    this.usersApi.remove(u.id).subscribe({
+      next: () => {
+        this.info.set(`${u.loginId} deleted.`);
+        this.loadUsers();
+      },
+      error: (err: HttpErrorResponse) => this.error.set(this.userErrorText(err)),
+    });
+  }
+
+  private updateUser(
+    u: AdminUser,
+    changes: { password?: string; role?: UserRole; isActive?: boolean },
+    done: string,
+  ) {
+    this.error.set('');
+    this.info.set('');
+    this.usersApi.update(u.id, { name: u.name, ...changes }).subscribe({
+      next: () => {
+        this.info.set(done);
+        this.loadUsers();
+      },
+      error: (err: HttpErrorResponse) => {
+        this.error.set(this.userErrorText(err));
+        this.loadUsers(); // put the dropdown back to the real value
+      },
+    });
+  }
+
+  private userErrorText(err: HttpErrorResponse): string {
+    if (err.status === 403) return 'Only a Superuser can manage users.';
+    const e = err.error;
+    if (typeof e === 'string' && e) return e;
+    if (e?.message) return String(e.message);
+    if (e?.error) return String(e.error);
+    return this.errorText(err);
+  }
+
   select(table: TableName) {
+    this.search.set('');
+    this.showUsers.set(false);
     this.active.set(table);
     this.editingId.set(null);
     this.error.set('');

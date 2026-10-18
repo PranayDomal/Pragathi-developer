@@ -5,19 +5,39 @@
         <span class="tag">DEV MODE</span>
         <h1>Admin — Database</h1>
         <p>View, update and delete records saved by the website forms.</p>
+        <p class="who">Signed in as {{ who }} ({{ role }})</p>
       </div>
       <button type="button" class="out" (click)="signOut()">Sign out</button>
     </div>
 
     <div class="tabs">
       @for (t of tables; track t.key) {
-        <button type="button" class="tab" [class.on]="active() === t.key" (click)="select(t.key)">
+        <button
+          type="button"
+          class="tab"
+          [class.on]="active() === t.key && !showUsers()"
+          (click)="select(t.key)"
+        >
           {{ t.label }} <span class="count">{{ data()[t.key].length }}</span>
         </button>
       }
-      <button type="button" class="refresh" (click)="loadAll()" [disabled]="loading()">
+      @if (isSuperuser) {
+        <button type="button" class="tab" [class.on]="showUsers()" (click)="openUsers()">
+          Users <span class="count">{{ users().length }}</span>
+        </button>
+      }
+      <button type="button" class="refresh" (click)="showUsers() ? loadUsers() : loadAll()" [disabled]="loading()">
         {{ loading() ? 'Loading…' : 'Refresh' }}
       </button>
+    </div>
+
+    <div class="search-bar">
+      <input
+        type="search"
+        placeholder="Search {{ showUsers() ? 'users' : current().label.toLowerCase() }}…"
+        [value]="search()"
+        (input)="onSearch($event)"
+      />
     </div>
 
     @if (error()) {
@@ -27,68 +47,143 @@
       <p class="msg ok" role="status">{{ info() }}</p>
     }
 
-    <div class="table-wrap">
-      <table>
-        <thead>
-          <tr>
-            @for (c of current().cols; track c.key) {
-              <th>{{ c.label }}</th>
-            }
-                        @if (!current().locked) {
-              <th class="actions-head">Actions</th>
-            }
-          </tr>
-        </thead>
-        <tbody>
-          @for (row of rows(); track row['id']) {
-            @let editing = editingId() === row['id'];
-            <tr [class.editing]="editing">
-              @for (c of current().cols; track c.key) {
-                <td>
-                  @if (editing && c.edit) {
-                    @if (c.edit === 'select' || c.edit === 'bool') {
-                      <select (change)="setDraft(c.key, $event)">
-                        @for (o of optionsFor(c); track o) {
-                          <option [value]="o" [selected]="draft[c.key] === o">{{ o || '—' }}</option>
-                        }
-                      </select>
-                    } @else if (c.edit === 'textarea') {
-                      <textarea rows="3" [value]="draft[c.key] ?? ''" (input)="setDraft(c.key, $event)"></textarea>
-                    } @else {
-                      <input
-                        [type]="c.edit === 'number' ? 'number' : c.edit === 'date' ? 'date' : 'text'"
-                        [value]="draft[c.key] ?? ''"
-                        (input)="setDraft(c.key, $event)"
-                      />
-                    }
-                  } @else {
-                    <span class="cell">{{ show(row, c) }}</span>
-                  }
-                </td>
-              }
-                            @if (!current().locked) {
-                <td class="actions">
-                  @if (editing) {
-                    <button type="button" class="btn save" (click)="save(row)" [disabled]="saving()">
-                      {{ saving() ? 'Saving…' : 'Save' }}
-                    </button>
-                    <button type="button" class="btn" (click)="cancelEdit()">Cancel</button>
-                  } @else {
-                    <button type="button" class="btn" (click)="startEdit(row)">Edit</button>
-                    <button type="button" class="btn del" (click)="remove(row)">Delete</button>
-                  }
-                </td>
-              }
-            </tr>
-          } @empty {
+    @if (!showUsers()) {
+      <div class="table-wrap">
+        <table>
+          <thead>
             <tr>
-              <td class="none" [attr.colspan]="current().cols.length + (current().locked ? 0 : 1)">
-                {{ loading() ? 'Loading…' : 'No records yet.' }}
-              </td>
+              @for (c of current().cols; track c.key) {
+                <th>{{ c.label }}</th>
+              }
+              @if (!current().locked && canEdit) {
+                <th class="actions-head">Actions</th>
+              }
             </tr>
-          }
-        </tbody>
-      </table>
-    </div>
+          </thead>
+          <tbody>
+            @for (row of rows(); track row['id']) {
+              @let editing = editingId() === row['id'];
+              <tr [class.editing]="editing">
+                @for (c of current().cols; track c.key) {
+                  <td>
+                    @if (editing && c.edit) {
+                      @if (c.edit === 'select' || c.edit === 'bool') {
+                        <select (change)="setDraft(c.key, $event)">
+                          @for (o of optionsFor(c); track o) {
+                            <option [value]="o" [selected]="draft[c.key] === o">{{ o || '—' }}</option>
+                          }
+                        </select>
+                      } @else if (c.edit === 'textarea') {
+                        <textarea rows="3" [value]="draft[c.key] ?? ''" (input)="setDraft(c.key, $event)"></textarea>
+                      } @else {
+                        <input
+                          [type]="c.edit === 'number' ? 'number' : c.edit === 'date' ? 'date' : 'text'"
+                          [value]="draft[c.key] ?? ''"
+                          (input)="setDraft(c.key, $event)"
+                        />
+                      }
+                    } @else {
+                      <span class="cell">{{ show(row, c) }}</span>
+                    }
+                  </td>
+                }
+                @if (!current().locked && canEdit) {
+                  <td class="actions">
+                    @if (editing) {
+                      <button type="button" class="btn save" (click)="save(row)" [disabled]="saving()">
+                        {{ saving() ? 'Saving…' : 'Save' }}
+                      </button>
+                      <button type="button" class="btn" (click)="cancelEdit()">Cancel</button>
+                    } @else {
+                      <button type="button" class="btn" (click)="startEdit(row)">Edit</button>
+                      <button type="button" class="btn del" (click)="remove(row)">Delete</button>
+                    }
+                  </td>
+                }
+              </tr>
+            } @empty {
+              <tr>
+                <td class="none" [attr.colspan]="current().cols.length + (current().locked || !canEdit ? 0 : 1)">
+                  {{ loading() ? 'Loading…' : search() ? 'Nothing matches your search.' : 'No records yet.' }}
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    } @else {
+      <div class="user-bar">
+        <button type="button" class="btn save" (click)="toggleAdd()">
+          {{ showAdd() ? 'Close' : '+ Add user' }}
+        </button>
+      </div>
+
+      @if (showAdd()) {
+        <form class="user-form" (submit)="createUser($event)">
+          <input name="loginId" placeholder="Login ID (e.g. ravi)" required autocomplete="off" />
+          <input name="name" placeholder="Full name" required autocomplete="off" />
+          <input
+            name="password"
+            type="password"
+            placeholder="Password (min 8 characters)"
+            required
+            autocomplete="new-password"
+          />
+          <select name="role">
+            <option value="Viewer">Viewer (view only)</option>
+            <option value="Editor">Editor (edit and delete leads)</option>
+            <option value="Superuser">Superuser (also manages users)</option>
+          </select>
+          <button type="submit" class="btn save" [disabled]="saving()">
+            {{ saving() ? 'Saving…' : 'Create user' }}
+          </button>
+        </form>
+      }
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Login ID</th>
+              <th>Name</th>
+              <th>Role</th>
+              <th>Active</th>
+              <th class="actions-head">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (u of filteredUsers(); track u.id) {
+              <tr>
+                <td>{{ u.id }}</td>
+                <td>{{ u.loginId }}</td>
+                <td>{{ u.name }}</td>
+                <td>
+                  <select (change)="changeRole(u, $event)">
+                    @for (r of ['Viewer', 'Editor', 'Superuser']; track r) {
+                      <option [value]="r" [selected]="u.role === r">{{ r }}</option>
+                    }
+                  </select>
+                </td>
+                <td>{{ u.isActive ? 'Yes' : 'No' }}</td>
+                <td class="actions">
+                  <button type="button" class="btn" (click)="toggleActive(u)">
+                    {{ u.isActive ? 'Switch off' : 'Switch on' }}
+                  </button>
+                  <button type="button" class="btn" (click)="resetPassword(u)">Reset password</button>
+                  <button type="button" class="btn del" (click)="removeUser(u)">Delete</button>
+                </td>
+              </tr>
+            } @empty {
+              <tr>
+                <td class="none" colspan="6">
+                  {{ loading() ? 'Loading…' : search() ? 'Nothing matches your search.' : 'No users.' }}
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    }
   </div>
 </section>

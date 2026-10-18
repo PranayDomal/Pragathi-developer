@@ -5,4 +5,6 @@
 <app-footer />
 <app-enquiry-modal />
 <app-admin-login />
-<app-floating-widgets />
+@if (!isAdmin()) {
+  <app-floating-widgets />
+}

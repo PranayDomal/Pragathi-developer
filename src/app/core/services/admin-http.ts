@@ -1,5 +1,5 @@
 import { inject } from '@angular/core';
-import { CanActivateFn, Router } from '@angular/router';
+import { CanActivateFn, Router, CanDeactivateFn } from '@angular/router';
 import { HttpInterceptorFn } from '@angular/common/http';
 import { catchError, throwError } from 'rxjs';
 import { API_BASE } from './api.service';
@@ -30,4 +30,14 @@ export const adminAuthInterceptor: HttpInterceptorFn = (req, next) => {
 export const adminGuard: CanActivateFn = () => {
   const router = inject(Router);
   return isAdminSessionValid() ? true : router.createUrlTree(['/']);
+};
+
+export const SIGN_OUT_WARNING = 'Sign out!\n\nYou will be signed out of the admin panel. Continue?';
+
+// Leaving the admin page (any link, back button...) means signing out. Ask first.
+export const adminLeaveGuard: CanDeactivateFn<unknown> = () => {
+  if (!isAdminSessionValid()) return true; // already signed out, nothing to ask
+  if (!confirm(SIGN_OUT_WARNING)) return false; // Cancel: stay here
+  clearAdminSession();
+  return true;
 };

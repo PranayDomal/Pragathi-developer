@@ -8,13 +8,14 @@ import { FloorPlansPage } from './pages/floor-plans-page/floor-plans-page';
 import { ContactPage } from './pages/contact-page/contact-page';
 import { AmenitiesPage } from './pages/amenities-page/amenities-page';
 import { AdminPage } from './admin/admin-page/admin-page';
-import { adminGuard } from './core/services/admin-http';
+import { adminGuard, adminLeaveGuard } from './core/services/admin-http';
+
 
 
 export const routes: Routes = [
 
     { 
-      path: 'admin', component: AdminPage, title: 'Admin | Green Woods', canActivate: [adminGuard]
+      path: 'admin', component: AdminPage, title: 'Admin | Green Woods', canActivate: [adminGuard], canDeactivate: [adminLeaveGuard],
     },
 
   {

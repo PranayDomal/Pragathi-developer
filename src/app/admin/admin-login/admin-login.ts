@@ -66,6 +66,8 @@ export class AdminLogin implements OnDestroy {
         this.router.navigateByUrl('/admin');
       } else if (result === 'wrong') {
         this.error.set('Wrong ID or password.');
+      } else if (result === 'disabled') {
+        this.error.set('This account is switched off. Please contact your administrator.');
       } else if (result === 'busy') {
         this.error.set('Too many attempts. Please wait a minute and try again.');
       } else {

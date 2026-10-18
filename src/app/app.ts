@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { filter } from 'rxjs';
 import { Header } from './layout/header/header';
@@ -17,6 +17,9 @@ export class App {
   private router = inject(Router);
   private lastPath = '';
 
+  // true while the admin panel is open (the floating buttons are hidden there)
+  isAdmin = signal(false);
+
   constructor() {
     // After every page change:
     // - a different page starts at the very top (instantly, no long slide)
@@ -26,6 +29,8 @@ export class App {
       .subscribe((e) => {
         const [path, fragment] = (e as NavigationEnd).urlAfterRedirects.split('#');
         const samePath = path === this.lastPath;
+
+        this.isAdmin.set(path.startsWith('/admin'));
 
         if (!samePath) {
           window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
