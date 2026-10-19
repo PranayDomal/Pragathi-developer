@@ -1,10 +1,12 @@
-<app-header />
+@if (!isAdmin()) {
+  <app-header />
+}
 <main>
   <router-outlet />
 </main>
-<app-footer />
-<app-enquiry-modal />
-<app-admin-login />
 @if (!isAdmin()) {
+  <app-footer />
+  <app-enquiry-modal />
   <app-floating-widgets />
 }
+<app-admin-login />
